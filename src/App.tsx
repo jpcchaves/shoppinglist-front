@@ -1,42 +1,11 @@
-import { Box, Heading } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { http } from "./http/http";
-
-interface IShoppingCart {
-  id?: string;
-  uuid?: string;
-  name: string;
-  createdAt: string;
-}
+import { Route, Routes } from "react-router-dom";
+import ShoppingCartList from "./modules/shoppingCart/pages/shoppingCartList";
 
 function App() {
-  const [shoppingCarts, setShoppingCarts] = useState<IShoppingCart[] | null>(
-    null
-  );
-
-  useEffect(() => {
-    getShoppingCarts();
-  }, []);
-
-  const getShoppingCarts = async () => {
-    await http
-      .get("/api/v1/shopping-carts")
-      .then(({ data }: { data: IShoppingCart[] }) => {
-        setShoppingCarts(data);
-      })
-      .catch((err) => console.log(err));
-  };
-
   return (
-    <>
-      {(shoppingCarts || []).map(({ id, uuid, createdAt, name }) => (
-        <Box>
-          <Heading>
-            {name}, {id}, {uuid}, {createdAt}
-          </Heading>
-        </Box>
-      ))}
-    </>
+    <Routes>
+      <Route path="/" element={<ShoppingCartList />} />
+    </Routes>
   );
 }
 
