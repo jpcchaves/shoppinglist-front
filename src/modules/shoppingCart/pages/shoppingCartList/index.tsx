@@ -1,6 +1,6 @@
-import { Button, Card, CardBody, CardFooter, CardHeader, Heading, SimpleGrid, Text } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { http } from "../../../../http/http";
+import {Button, Card, CardBody, CardFooter, CardHeader, Heading, SimpleGrid, Text, VStack} from "@chakra-ui/react";
+import {useEffect, useState} from "react";
+import {http} from "../../../../http/http";
 
 interface IShoppingCart {
   id?: string;
@@ -22,7 +22,7 @@ const ShoppingCartList = () => {
   const getShoppingCarts = async () => {
     await http
       .get("/api/v1/shopping-carts")
-      .then(({ data }: { data: IShoppingCart[] }) => {
+      .then(({data}: { data: IShoppingCart[] }) => {
         setShoppingCarts(data);
       })
       .catch((err) => console.log(err));
@@ -33,13 +33,13 @@ const ShoppingCartList = () => {
   }
 
   const formatDate = (date: Date) => {
-    const options = { timeZone: 'America/Sao_Paulo' };
+    const options = {timeZone: 'America/Sao_Paulo'};
     return date.toLocaleDateString('pt-BR', options);
   }
 
   return (
     <SimpleGrid columns={4} gap={4} p={12}>
-      {(shoppingCarts || []).map(({ id, name, productsAmount, createdAt }) => (
+      {(shoppingCarts || []).map(({id, name, productsAmount, createdAt}) => (
         <>
           <Card key={id} size={'md'}>
             <CardHeader>
@@ -50,13 +50,14 @@ const ShoppingCartList = () => {
               <Text>Produtos: {productsAmount}</Text>
             </CardBody>
             <CardFooter>
-              <Button w={'full'} colorScheme="blue">
-                Ver mais
-              </Button>
-              <span>
-
-                <small>Criado em {(formatDate(formalizeDate(createdAt)))}</small>
-              </span>
+              <VStack w={'full'}>
+                <Button w={'full'} colorScheme="blue">
+                  Ver mais
+                </Button>
+                <Text w={'full'} textAlign={'end'} fontSize='x-small' fontStyle={'italic'} color={'whiteAlpha.500'}>
+                  Criado em {(formatDate(formalizeDate(createdAt)))}
+                </Text>
+              </VStack>
             </CardFooter>
           </Card>
         </>
