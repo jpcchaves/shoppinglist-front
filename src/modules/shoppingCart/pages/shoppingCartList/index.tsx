@@ -1,32 +1,16 @@
 import {Button, Card, CardBody, CardFooter, CardHeader, Heading, SimpleGrid, Text, VStack} from "@chakra-ui/react";
-import {useEffect, useState} from "react";
-import {http} from "../../../../http/http";
-
-interface IShoppingCart {
-  id?: string;
-  uuid?: string;
-  name: string;
-  productsAmount: string;
-  createdAt: string;
-}
+import {useEffect} from "react";
+import useShoppingCart from "../../hook/useShoppingCart";
+import {useAppSelector} from "../../../../hooks/useRedux";
 
 const ShoppingCartList = () => {
-  const [shoppingCarts, setShoppingCarts] = useState<IShoppingCart[] | null>(
-    null
-  );
+  const {getShoppingCarts} = useShoppingCart();
+  const {shoppingCarts} = useAppSelector(state => state.shoppingCart);
 
   useEffect(() => {
     getShoppingCarts();
-  }, []);
+  }, [getShoppingCarts]);
 
-  const getShoppingCarts = async () => {
-    await http
-      .get("/api/v1/shopping-carts")
-      .then(({data}: { data: IShoppingCart[] }) => {
-        setShoppingCarts(data);
-      })
-      .catch((err) => console.log(err));
-  };
 
   const formalizeDate = (rawDate: string) => {
     return new Date(rawDate);
