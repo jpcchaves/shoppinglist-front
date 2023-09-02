@@ -1,6 +1,7 @@
 import {Button, Card, CardBody, CardFooter, CardHeader, Heading, SimpleGrid, Text, VStack} from "@chakra-ui/react";
 import {formalizeDate, formatDate} from "../../utils/dateUtils";
 import {ShoppingCartModel} from "../../models/ShoppingCartModel";
+import FloatButton from "../../components/floatButton";
 
 interface IProps {
   shoppingCarts: ShoppingCartModel[]
@@ -32,6 +33,8 @@ const ShoppingCartListView = ({shoppingCarts}: IProps) => {
           </Card>
         </>
       ))}
+
+      <FloatButton aria-label={'float button'}/>
     </SimpleGrid>
   );
 };
