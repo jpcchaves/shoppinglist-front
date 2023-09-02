@@ -7,8 +7,8 @@ const UseShoppingCart = () => {
 
   const dispatch = useAppDispatch();
 
-  const getShoppingCarts = async () => {
-    await http
+  const getShoppingCarts = () => {
+    http
       .get("/api/v1/shopping-carts")
       .then(({data}: { data: ShoppingCartModel[] }) => {
         dispatch(loadShoppingCarts(data));
