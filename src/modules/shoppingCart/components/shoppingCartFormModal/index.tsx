@@ -1,41 +1,47 @@
 import {
   Button,
-  FormControl, FormLabel, Input,
+  FormControl,
+  FormLabel,
+  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
-  ModalContent, ModalFooter,
+  ModalContent,
+  ModalFooter,
   ModalHeader,
-  ModalOverlay, Textarea
+  ModalOverlay,
+  Textarea,
 } from "@chakra-ui/react";
 
-const ShoppingCartFormModal = () => {
+interface IProps {
+  isModalOpen: boolean;
+  toggleModal: () => void;
+}
+
+const ShoppingCartFormModal = ({ isModalOpen, toggleModal }: IProps) => {
   return (
-    <Modal
-      isOpen={true}
-      onClose={() => console.log("")}
-    >
-      <ModalOverlay/>
+    <Modal isOpen={isModalOpen} onClose={toggleModal}>
+      <ModalOverlay />
       <ModalContent>
         <ModalHeader>Adicionar Nova Lista de Compras</ModalHeader>
-        <ModalCloseButton/>
+        <ModalCloseButton />
         <ModalBody pb={6}>
           <FormControl>
             <FormLabel>Dê um nome a sua lista</FormLabel>
-            <Input/>
+            <Input />
           </FormControl>
 
           <FormControl mt={4}>
             <FormLabel>Adicione uma descrição</FormLabel>
-            <Textarea/>
+            <Textarea />
           </FormControl>
         </ModalBody>
 
         <ModalFooter>
-          <Button colorScheme='blue' mr={3}>
+          <Button colorScheme="blue" mr={3}>
             Salvar
           </Button>
-          <Button onClick={() => console.log("")}>Cancelar</Button>
+          <Button onClick={toggleModal}>Cancelar</Button>
         </ModalFooter>
       </ModalContent>
     </Modal>

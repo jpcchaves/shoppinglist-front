@@ -2,9 +2,10 @@ import {IconButton, IconButtonProps} from "@chakra-ui/react";
 import {AddIcon} from "@chakra-ui/icons";
 
 interface IProps extends IconButtonProps {
+  handleClick: () => void
 }
 
-const FloatButton = ({...rest}: IProps) => {
+const FloatButton = ({handleClick, ...rest}: IProps) => {
   return (
     <IconButton
       {...rest}
@@ -17,6 +18,7 @@ const FloatButton = ({...rest}: IProps) => {
       icon={<AddIcon/>}
       borderRadius={'full'}
       size='lg'
+      onClick={() => handleClick()}
     />
   );
 };
