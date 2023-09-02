@@ -2,6 +2,7 @@ import {Button, Card, CardBody, CardFooter, CardHeader, Heading, SimpleGrid, Tex
 import {useEffect} from "react";
 import useShoppingCart from "../../hook/useShoppingCart";
 import {useAppSelector} from "../../../../hooks/useRedux";
+import {formalizeDate, formatDate} from "../../utils/dateUtils";
 
 const ShoppingCartList = () => {
   const {getShoppingCarts} = useShoppingCart();
@@ -12,17 +13,8 @@ const ShoppingCartList = () => {
   }, [getShoppingCarts]);
 
 
-  const formalizeDate = (rawDate: string) => {
-    return new Date(rawDate);
-  }
-
-  const formatDate = (date: Date) => {
-    const options = {timeZone: 'America/Sao_Paulo'};
-    return date.toLocaleDateString('pt-BR', options);
-  }
-
   return (
-    <SimpleGrid columns={4} gap={4} p={12}>
+    <SimpleGrid columns={{sm: 1, md: 2, lg: 3}} gap={4} p={12}>
       {(shoppingCarts || []).map(({id, name, productsAmount, createdAt}) => (
         <>
           <Card key={id} size={'md'}>
