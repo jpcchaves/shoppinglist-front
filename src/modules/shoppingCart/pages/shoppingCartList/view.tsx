@@ -13,23 +13,27 @@ import { formalizeDate, formatDate } from "../../utils/dateUtils";
 import { ShoppingCartModel } from "../../models/ShoppingCartModel";
 import FloatButton from "../../components/floatButton";
 import ShoppingCartFormModal from "../../components/shoppingCartFormModal";
+import { FormikValues } from "formik";
 
 interface IProps {
   shoppingCarts: ShoppingCartModel[];
   isModalOpen: boolean;
   toggleModal: () => void;
+  validation: FormikValues;
 }
 
 const ShoppingCartListView = ({
   shoppingCarts,
   toggleModal,
   isModalOpen,
+  validation,
 }: IProps) => {
   return (
     <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} gap={4} p={12}>
       <ShoppingCartFormModal
         isModalOpen={isModalOpen}
         toggleModal={toggleModal}
+        validation={validation}
       />
 
       {(shoppingCarts || []).map(({ id, name, productsAmount, createdAt }) => (
@@ -54,7 +58,7 @@ const ShoppingCartListView = ({
                   fontStyle={"italic"}
                   color={"whiteAlpha.500"}
                 >
-                  Criado em {formatDate(formalizeDate(createdAt))}
+                  Criado em {formatDate(formalizeDate(createdAt!))}
                 </Text>
               </VStack>
             </CardFooter>
