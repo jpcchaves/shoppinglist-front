@@ -10,6 +10,10 @@ interface IProps {
   toggleModal: () => void;
 }
 
+enum ShoppingCartApiRoute {
+  baseRoute = import.meta.env.VITE_API_SHOPPING_LIST_ROUTE,
+}
+
 const UseShoppingCart = ({ validation, toggleModal }: IProps) => {
   const dispatch = useAppDispatch();
   const { notifySuccess, notifyError } = useToast();
@@ -20,7 +24,7 @@ const UseShoppingCart = ({ validation, toggleModal }: IProps) => {
 
   const getShoppingCarts = () => {
     http
-      .get("/api/v1/shopping-carts")
+      .get(ShoppingCartApiRoute.baseRoute.toString())
       .then(({ data }: { data: ShoppingCartModel[] }) => {
         dispatch(loadShoppingCarts(data));
       })
@@ -29,7 +33,7 @@ const UseShoppingCart = ({ validation, toggleModal }: IProps) => {
 
   const createShoppingCart = (data: ShoppingCartModel) => {
     http
-      .post("/api/v1/shopping-carts", data)
+      .post(ShoppingCartApiRoute.baseRoute.toString(), data)
       .then(() => {
         getShoppingCarts();
         notifySuccess("Lista de compras criada com sucesso!");
