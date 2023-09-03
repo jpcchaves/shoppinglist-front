@@ -9,7 +9,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { formalizeDate, formatDate } from "../../utils/dateUtils";
+import { formatDate } from "../../utils/dateUtils";
 import { ShoppingCartModel } from "../../models/ShoppingCartModel";
 import FloatButton from "../../components/floatButton";
 import ShoppingCartFormModal from "../../components/shoppingCartFormModal";
@@ -58,7 +58,7 @@ const ShoppingCartListView = ({
                   fontStyle={"italic"}
                   color={"whiteAlpha.500"}
                 >
-                  Criado em {formatDate(formalizeDate(createdAt!))}
+                  Criado em {formatDate(createdAt!)}
                 </Text>
               </VStack>
             </CardFooter>
