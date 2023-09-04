@@ -42,54 +42,56 @@ const ShoppingCartListView = ({
         validation={validation}
       />
 
-      {(shoppingCarts || []).map(({ id, name, productsAmount, createdAt }) => (
-        <Card key={id} size={"md"} variant={"filled"}>
-          <CardHeader>
-            <Flex gap={"4"}>
-              <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-                <Box>
-                  <Heading size="sm">{name}</Heading>
-                </Box>
+      {(shoppingCarts || []).map(
+        ({ id, name, description, productsAmount, createdAt }) => (
+          <Card key={id} size={"md"} variant={"filled"}>
+            <CardHeader>
+              <Flex gap={"4"}>
+                <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
+                  <Box>
+                    <Heading size="sm">{name}</Heading>
+                  </Box>
+                </Flex>
+                <PopoverOptions
+                  options={[
+                    {
+                      title: "Editar",
+                      icon: <EditIcon color={"green.300"} />,
+                      shoppingCartId: id!,
+                    },
+                    {
+                      title: "Deletar",
+                      icon: <DeleteIcon color={"red.300"} />,
+                      shoppingCartId: id!,
+                      handleClick: deleteShoppingCart,
+                    },
+                  ]}
+                />
               </Flex>
-              <PopoverOptions
-                options={[
-                  {
-                    title: "Editar",
-                    icon: <EditIcon color={"green.300"} />,
-                    shoppingCartId: id!,
-                  },
-                  {
-                    title: "Deletar",
-                    icon: <DeleteIcon color={"red.300"} />,
-                    shoppingCartId: id!,
-                    handleClick: deleteShoppingCart,
-                  },
-                ]}
-              />
-            </Flex>
-          </CardHeader>
-          <CardBody>
-            <Text>{name}</Text>
-            <Text>Produtos: {productsAmount}</Text>
-          </CardBody>
-          <CardFooter>
-            <VStack w={"full"}>
-              <Button w={"full"} colorScheme="blue">
-                Ver mais
-              </Button>
-              <Text
-                w={"full"}
-                textAlign={"end"}
-                fontSize="x-small"
-                fontStyle={"italic"}
-                color={"whiteAlpha.500"}
-              >
-                Criado em {formatDate(createdAt!)}
-              </Text>
-            </VStack>
-          </CardFooter>
-        </Card>
-      ))}
+            </CardHeader>
+            <CardBody>
+              <Text>{description}</Text>
+              <Text>Produtos: {productsAmount}</Text>
+            </CardBody>
+            <CardFooter>
+              <VStack w={"full"}>
+                <Button w={"full"} colorScheme="blue">
+                  Ver mais
+                </Button>
+                <Text
+                  w={"full"}
+                  textAlign={"end"}
+                  fontSize="x-small"
+                  fontStyle={"italic"}
+                  color={"whiteAlpha.500"}
+                >
+                  Criado em {formatDate(createdAt!)}
+                </Text>
+              </VStack>
+            </CardFooter>
+          </Card>
+        ),
+      )}
 
       <FloatButton handleClick={toggleModal} aria-label={"float button"} />
     </SimpleGrid>
