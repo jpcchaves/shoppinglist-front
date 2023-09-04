@@ -58,7 +58,12 @@ const ShoppingCartFormModal = ({
 
             <FormControl mt={4}>
               <FormLabel>Adicione uma descrição</FormLabel>
-              <Textarea />
+              <Textarea
+                name={"description"}
+                onChange={validation.handleChange}
+                value={validation.values.description}
+                onBlur={validation.handleBlur}
+              />
             </FormControl>
           </ModalBody>
 
