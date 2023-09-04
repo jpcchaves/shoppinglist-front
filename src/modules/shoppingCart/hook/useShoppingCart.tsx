@@ -42,11 +42,30 @@ const UseShoppingCart = ({ validation, toggleModal }: IProps) => {
       })
       .catch((err) => {
         console.log(err);
-        notifyError("Ocorreu um erro ao criar a lista de compras");
+        notifyError(
+          err?.response?.message ||
+            "Ocorreu um erro ao criar a lista de compras",
+        );
       });
   };
 
-  return { getShoppingCarts, createShoppingCart };
+  const deleteShoppingCart = (id: string) => {
+    http
+      .delete(`${ShoppingCartApiRoute.baseRoute.toString()}/${id}`)
+      .then(() => {
+        getShoppingCarts();
+        notifySuccess("Lista de compras deletada com sucesso");
+      })
+      .catch((err) => {
+        console.log(err);
+        notifyError(
+          err?.response?.message ||
+            "Ocorreu um erro ao deletar a lista de compras",
+        );
+      });
+  };
+
+  return { getShoppingCarts, createShoppingCart, deleteShoppingCart };
 };
 
 export default UseShoppingCart;
