@@ -9,13 +9,15 @@ import { ShoppingCartModel } from "../../models/ShoppingCartModel";
 
 const ShoppingCartList = () => {
   const { isModalOpen, toggleModal } = useShoppingCartModal();
-  const { shoppingCarts } = useAppSelector((state) => state.shoppingCart);
+  const { shoppingCarts, shoppingCartById } = useAppSelector(
+    (state) => state.shoppingCart,
+  );
 
   const validation = useFormik({
     enableReinitialize: true,
     initialValues: {
-      name: "",
-      description: "",
+      name: shoppingCartById ? shoppingCartById.name : "",
+      description: shoppingCartById ? shoppingCartById.description : "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("O campo é obrigatório"),
@@ -27,15 +29,24 @@ const ShoppingCartList = () => {
         description: values.description,
       };
 
-      createShoppingCart(valuesToSubmit);
+      if (shoppingCartById) {
+        updateShoppingCart(shoppingCartById.id!, valuesToSubmit);
+      } else {
+        createShoppingCart(valuesToSubmit);
+      }
     },
   });
 
-  const { getShoppingCarts, createShoppingCart, deleteShoppingCart } =
-    useShoppingCart({
-      validation,
-      toggleModal,
-    });
+  const {
+    getShoppingCarts,
+    createShoppingCart,
+    deleteShoppingCart,
+    getShoppingCartById,
+    updateShoppingCart,
+  } = useShoppingCart({
+    validation,
+    toggleModal,
+  });
 
   useEffect(() => {
     getShoppingCarts();
@@ -48,6 +59,7 @@ const ShoppingCartList = () => {
       shoppingCarts={shoppingCarts}
       validation={validation}
       deleteShoppingCart={deleteShoppingCart}
+      getShoppingCartById={getShoppingCartById}
     />
   );
 };

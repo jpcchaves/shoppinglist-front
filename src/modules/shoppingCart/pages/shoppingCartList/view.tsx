@@ -25,6 +25,7 @@ interface IProps {
   toggleModal: () => void;
   validation: FormikValues;
   deleteShoppingCart: (shoppingCartId: string) => void;
+  getShoppingCartById: (shoppingCartId: string) => void;
 }
 
 const ShoppingCartListView = ({
@@ -33,6 +34,7 @@ const ShoppingCartListView = ({
   isModalOpen,
   validation,
   deleteShoppingCart,
+  getShoppingCartById,
 }: IProps) => {
   return (
     <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} gap={4} p={12}>
@@ -58,6 +60,7 @@ const ShoppingCartListView = ({
                       title: "Editar",
                       icon: <EditIcon color={"green.300"} />,
                       shoppingCartId: id!,
+                      handleClick: getShoppingCartById,
                     },
                     {
                       title: "Deletar",
