@@ -7,12 +7,6 @@ import {
   CardHeader,
   Flex,
   Heading,
-  IconButton,
-  Popover,
-  PopoverArrow,
-  PopoverContent,
-  PopoverHeader,
-  PopoverTrigger,
   SimpleGrid,
   Text,
   VStack,
@@ -22,15 +16,15 @@ import { ShoppingCartModel } from "../../models/ShoppingCartModel";
 import FloatButton from "../../components/floatButton";
 import ShoppingCartFormModal from "../../components/shoppingCartFormModal";
 import { FormikValues } from "formik";
-
-import { BsThreeDotsVertical } from "react-icons/bs";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import PopoverOptions from "../../components/popoverOptions";
 
 interface IProps {
   shoppingCarts: ShoppingCartModel[];
   isModalOpen: boolean;
   toggleModal: () => void;
   validation: FormikValues;
+  deleteShoppingCart: (shoppingCartId: string) => void;
 }
 
 const ShoppingCartListView = ({
@@ -38,6 +32,7 @@ const ShoppingCartListView = ({
   toggleModal,
   isModalOpen,
   validation,
+  deleteShoppingCart,
 }: IProps) => {
   return (
     <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} gap={4} p={12}>
@@ -56,38 +51,21 @@ const ShoppingCartListView = ({
                   <Heading size="sm">{name}</Heading>
                 </Box>
               </Flex>
-
-              <Popover placement={"left-end"}>
-                <PopoverTrigger>
-                  <IconButton
-                    variant="link"
-                    colorScheme="gray"
-                    aria-label="menu options"
-                    icon={<BsThreeDotsVertical />}
-                  />
-                </PopoverTrigger>
-                <PopoverContent zIndex={4} w={"fit-content"} textAlign={"left"}>
-                  <PopoverHeader>
-                    <Button
-                      aria-label={"edit button"}
-                      variant={"link"}
-                      leftIcon={<EditIcon color={"green.300"} />}
-                    >
-                      Editar
-                    </Button>
-                  </PopoverHeader>
-                  <PopoverHeader>
-                    <Button
-                      aria-label={"edit button"}
-                      variant={"link"}
-                      leftIcon={<DeleteIcon color={"red.300"} />}
-                    >
-                      Apagar
-                    </Button>
-                  </PopoverHeader>
-                  <PopoverArrow />
-                </PopoverContent>
-              </Popover>
+              <PopoverOptions
+                options={[
+                  {
+                    title: "Editar",
+                    icon: <EditIcon color={"green.300"} />,
+                    shoppingCartId: id!,
+                  },
+                  {
+                    title: "Deletar",
+                    icon: <DeleteIcon color={"red.300"} />,
+                    shoppingCartId: id!,
+                    handleClick: deleteShoppingCart,
+                  },
+                ]}
+              />
             </Flex>
           </CardHeader>
           <CardBody>

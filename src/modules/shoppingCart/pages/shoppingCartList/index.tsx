@@ -31,10 +31,11 @@ const ShoppingCartList = () => {
     },
   });
 
-  const { getShoppingCarts, createShoppingCart } = useShoppingCart({
-    validation,
-    toggleModal,
-  });
+  const { getShoppingCarts, createShoppingCart, deleteShoppingCart } =
+    useShoppingCart({
+      validation,
+      toggleModal,
+    });
 
   useEffect(() => {
     getShoppingCarts();
@@ -46,6 +47,7 @@ const ShoppingCartList = () => {
       toggleModal={toggleModal}
       shoppingCarts={shoppingCarts}
       validation={validation}
+      deleteShoppingCart={deleteShoppingCart}
     />
   );
 };
