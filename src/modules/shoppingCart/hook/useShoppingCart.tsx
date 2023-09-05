@@ -8,6 +8,8 @@ import {
 } from "../../../store/shoppingCart/shoppingCartSlice";
 import useToast from "../../../hooks/useToast";
 import { FormikValues } from "formik";
+import { useContext } from "react";
+import { ModalDeleteContext } from "../../../contexts/modalDelete/context/ModalDeleteContext";
 
 interface IProps {
   validation: FormikValues;
@@ -21,6 +23,8 @@ enum ShoppingCartApiRoute {
 const UseShoppingCart = ({ validation, toggleModal }: IProps) => {
   const dispatch = useAppDispatch();
   const { notifySuccess, notifyError } = useToast();
+
+  const { toggleDeleteModal } = useContext(ModalDeleteContext);
 
   const resetForm = (): void => {
     dispatch(clearShoppingCartById());
@@ -88,6 +92,7 @@ const UseShoppingCart = ({ validation, toggleModal }: IProps) => {
       .delete(`${ShoppingCartApiRoute.baseRoute.toString()}/${id}`)
       .then(() => {
         getShoppingCarts();
+        toggleDeleteModal();
         notifySuccess("Lista de compras deletada com sucesso");
       })
       .catch((err) => {
