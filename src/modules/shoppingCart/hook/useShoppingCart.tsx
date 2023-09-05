@@ -23,6 +23,7 @@ const UseShoppingCart = ({ validation, toggleModal }: IProps) => {
   const { notifySuccess, notifyError } = useToast();
 
   const resetForm = (): void => {
+    dispatch(clearShoppingCartById());
     validation.resetForm();
   };
 
@@ -50,7 +51,6 @@ const UseShoppingCart = ({ validation, toggleModal }: IProps) => {
       .put(`${ShoppingCartApiRoute.baseRoute.toString()}/${id}`, data)
       .then(() => {
         resetForm();
-        dispatch(clearShoppingCartById());
         getShoppingCarts();
         toggleModal();
         notifySuccess("Lista de compras atualizada com sucesso!");
