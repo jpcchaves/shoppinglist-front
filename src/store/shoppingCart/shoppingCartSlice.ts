@@ -25,6 +25,7 @@ export const shoppingCartSlice = createSlice({
       action: PayloadLoadShoppingCart,
     ) => {
       state.shoppingCarts = action.payload;
+      state.shoppingCartById = null!;
     },
     loadShoppingCartById: (
       state: ShoppingCartState,

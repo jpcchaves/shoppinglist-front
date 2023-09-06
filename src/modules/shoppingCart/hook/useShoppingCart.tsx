@@ -2,7 +2,6 @@ import { http } from "../../../http/http";
 import { ShoppingCartModel } from "../models/ShoppingCartModel";
 import { useAppDispatch } from "../../../hooks/useRedux";
 import {
-  clearShoppingCartById,
   loadShoppingCartById,
   loadShoppingCarts,
 } from "../../../store/shoppingCart/shoppingCartSlice";
@@ -25,11 +24,6 @@ const UseShoppingCart = ({ validation, toggleModal }: IProps) => {
   const { notifySuccess, notifyError } = useToast();
 
   const { toggleDeleteModal } = useContext(ModalDeleteContext);
-
-  const resetForm = (): void => {
-    dispatch(clearShoppingCartById());
-    validation.resetForm();
-  };
 
   const getShoppingCarts = () => {
     http
@@ -54,9 +48,8 @@ const UseShoppingCart = ({ validation, toggleModal }: IProps) => {
     http
       .put(`${ShoppingCartApiRoute.baseRoute.toString()}/${id}`, data)
       .then(() => {
-        resetForm();
-        getShoppingCarts();
         toggleModal();
+        getShoppingCarts();
         notifySuccess("Lista de compras atualizada com sucesso!");
       })
       .catch((err) => {
@@ -73,10 +66,10 @@ const UseShoppingCart = ({ validation, toggleModal }: IProps) => {
     http
       .post(ShoppingCartApiRoute.baseRoute.toString(), data)
       .then(() => {
+        validation.resetForm();
         getShoppingCarts();
         notifySuccess("Lista de compras criada com sucesso!");
         toggleModal();
-        resetForm();
       })
       .catch((err) => {
         console.log(err);
