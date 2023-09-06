@@ -21,6 +21,7 @@ import PopoverOptions from "../../components/popoverOptions";
 import React, { useContext } from "react";
 import { ModalDeleteContext } from "../../../../contexts/modalDelete/context/ModalDeleteContext";
 import ModalDelete from "../../../../components/modalDelete";
+import { useNavigate } from "react-router-dom";
 
 interface IProps {
   shoppingCarts: ShoppingCartModel[];
@@ -39,6 +40,8 @@ const ShoppingCartListView = ({
   deleteShoppingCart,
   getShoppingCartById,
 }: IProps) => {
+  const navigate = useNavigate();
+
   const { toggleDeleteModal } = useContext(ModalDeleteContext);
 
   return (
@@ -84,7 +87,12 @@ const ShoppingCartListView = ({
               </CardBody>
               <CardFooter>
                 <VStack w={"full"}>
-                  <Button w={"full"} colorScheme="blue">
+                  <Button
+                    onClick={() => navigate(`/${id}`)}
+                    type={"button"}
+                    w={"full"}
+                    colorScheme="blue"
+                  >
                     Ver mais
                   </Button>
                   <Text
