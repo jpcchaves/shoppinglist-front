@@ -18,7 +18,15 @@ import FloatButton from "../../../../components/floatButton";
 import GoBackButton from "../../../../components/goBackButton";
 import { useNavigate } from "react-router-dom";
 
-const ProductsListView = () => {
+interface IProps {
+  isProductModalOpen: boolean;
+  toggleProductModal: () => void;
+}
+
+const ProductsListView = ({
+  toggleProductModal,
+  isProductModalOpen,
+}: IProps) => {
   const navigate = useNavigate();
 
   const { productList } = useAppSelector((state) => state.product);
