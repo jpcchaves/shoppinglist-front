@@ -5,6 +5,7 @@ import {
   loadProductById,
   loadProductList,
 } from "../../../store/products/productSlice";
+import useToast from "../../../hooks/useToast";
 
 enum ProductsApiRoute {
   baseRoute = import.meta.env.VITE_API_PRODUCT_LIST_ROUTE,
@@ -16,6 +17,7 @@ interface IProps {
 
 const UseProducts = ({ shoppingCartId }: IProps) => {
   const dispatch = useAppDispatch();
+  const { notifySuccess, notifyError } = useToast();
 
   const getAllProducts = () => {
     http
@@ -41,7 +43,57 @@ const UseProducts = ({ shoppingCartId }: IProps) => {
       });
   };
 
-  return { getAllProducts, getProductById };
+  const addProduct = (data: ProductModel) => {
+    http
+      .post(ProductsApiRoute.baseRoute.toString(), data)
+      .then(() => {
+        notifySuccess("Produto adicionado com sucesso!");
+        getAllProducts();
+      })
+      .catch((err) => {
+        console.log(err);
+        notifyError(err?.response?.message || "Ocorreu um erro");
+      });
+  };
+
+  const updateProduct = (productId: string, data: ProductModel) => {
+    http
+      .put(
+        `${ProductsApiRoute.baseRoute.toString()}/${shoppingCartId}/${productId}`,
+        data,
+      )
+      .then(() => {
+        notifySuccess("Produto atualizado com sucesso!");
+        getAllProducts();
+      })
+      .catch((err) => {
+        console.log(err);
+        notifyError(err?.response?.message || "Ocorreu um erro");
+      });
+  };
+
+  const removeProduct = (productId: string) => {
+    http
+      .delete(
+        `${ProductsApiRoute.baseRoute.toString()}/${shoppingCartId}/${productId}`,
+      )
+      .then(() => {
+        notifySuccess("Produto removido com sucesso!");
+        getAllProducts();
+      })
+      .catch((err) => {
+        console.log(err);
+        notifyError(err?.response?.message || "Ocorreu um erro");
+      });
+  };
+
+  return {
+    getAllProducts,
+    getProductById,
+    addProduct,
+    updateProduct,
+    removeProduct,
+  };
 };
 
 export default UseProducts;
