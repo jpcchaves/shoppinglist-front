@@ -1,5 +1,7 @@
+import "./styles/style.css";
 import { useAppSelector } from "../../../../hooks/useRedux";
 import {
+  Box,
   Heading,
   IconButton,
   SimpleGrid,
@@ -33,20 +35,22 @@ const ProductsListView = () => {
           </Thead>
           <Tbody>
             {(productList || []).map(({ id, name, urgencyLevel }) => (
-              <Tr key={id}>
+              <Tr key={id} className={"actions-hidden-container"}>
                 <Td textAlign={"center"}>{name}</Td>
                 <Td textAlign={"center"}>{urgencyLevel}</Td>
-                <Td textAlign={"end"}>
-                  <IconButton
-                    variant="link"
-                    aria-label={"action button"}
-                    icon={<EditIcon />}
-                  />
-                  <IconButton
-                    variant="link"
-                    aria-label={"action button"}
-                    icon={<DeleteIcon />}
-                  />
+                <Td textAlign={"end"} position={"relative"} px={"8"}>
+                  <Box className={"actions-hidden"}>
+                    <IconButton
+                      variant="link"
+                      aria-label={"action button"}
+                      icon={<EditIcon />}
+                    />
+                    <IconButton
+                      variant="link"
+                      aria-label={"action button"}
+                      icon={<DeleteIcon />}
+                    />
+                  </Box>
                 </Td>
               </Tr>
             ))}

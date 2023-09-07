@@ -1,0 +1,10 @@
+.actions-hidden {
+  display: none;
+  position: relative;
+}
+
+.actions-hidden-container:hover > td > div {
+  display: block;
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
