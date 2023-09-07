@@ -15,8 +15,12 @@ import {
 } from "@chakra-ui/react";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import FloatButton from "../../../../components/floatButton";
+import GoBackButton from "../../../../components/goBackButton";
+import { useNavigate } from "react-router-dom";
 
 const ProductsListView = () => {
+  const navigate = useNavigate();
+
   const { productList } = useAppSelector((state) => state.product);
 
   return (
@@ -61,6 +65,11 @@ const ProductsListView = () => {
       <FloatButton
         handleClick={() => console.log("")}
         aria-label={"float button"}
+      />
+
+      <GoBackButton
+        handleClick={() => navigate("/")}
+        aria-label={"go back button"}
       />
     </SimpleGrid>
   );
