@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { formatDate } from "../../utils/dateUtils";
 import { ShoppingCartModel } from "../../models/ShoppingCartModel";
-import FloatButton from "../../components/floatButton";
+import FloatButton from "../../../../components/floatButton";
 import ShoppingCartFormModal from "../../components/shoppingCartFormModal";
 import { FormikValues } from "formik";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";

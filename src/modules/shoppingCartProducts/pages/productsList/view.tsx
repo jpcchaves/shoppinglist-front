@@ -14,7 +14,7 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
-import FloatButton from "../../../shoppingCart/components/floatButton";
+import FloatButton from "../../../../components/floatButton";
 
 const ProductsListView = () => {
   const { productList } = useAppSelector((state) => state.product);
