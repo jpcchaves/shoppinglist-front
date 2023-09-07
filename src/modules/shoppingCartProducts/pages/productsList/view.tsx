@@ -17,15 +17,19 @@ import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import FloatButton from "../../../../components/floatButton";
 import GoBackButton from "../../../../components/goBackButton";
 import { useNavigate } from "react-router-dom";
+import { FormikValues } from "formik";
+import ProductModalForm from "../../components/productModalForm";
 
 interface IProps {
   isProductModalOpen: boolean;
   toggleProductModal: () => void;
+  validation: FormikValues;
 }
 
 const ProductsListView = ({
   toggleProductModal,
   isProductModalOpen,
+  validation,
 }: IProps) => {
   const navigate = useNavigate();
 
@@ -33,6 +37,12 @@ const ProductsListView = ({
 
   return (
     <SimpleGrid pt={16} px={{ base: "8", md: "16", lg: "32", xl: "48" }}>
+      <ProductModalForm
+        toggleModal={toggleProductModal}
+        isModalOpen={isProductModalOpen}
+        validation={validation}
+      />
+
       <Heading textAlign={"center"} pb={8}>
         Lista de Compras
       </Heading>
@@ -71,7 +81,7 @@ const ProductsListView = ({
       </TableContainer>
 
       <FloatButton
-        handleClick={() => console.log("")}
+        handleClick={toggleProductModal}
         aria-label={"float button"}
       />
 
