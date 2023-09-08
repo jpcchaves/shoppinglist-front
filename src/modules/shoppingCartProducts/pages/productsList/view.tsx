@@ -29,6 +29,7 @@ interface IProps {
   validation: FormikValues;
   handleEdit: (id: string) => void;
   handleDelete: (id: string) => void;
+  exportToPdf: () => void;
 }
 
 const ProductsListView = ({
@@ -37,6 +38,7 @@ const ProductsListView = ({
   toggleDeleteModal,
   validation,
   handleEdit,
+  exportToPdf,
   handleDelete,
 }: IProps) => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -104,6 +106,14 @@ const ProductsListView = ({
       <FloatButton
         handleClick={toggleProductModal}
         aria-label={"float button"}
+      />
+
+      <IconButton
+        aria-label={"icon button exportToPdf"}
+        position={"fixed"}
+        right={"16"}
+        bottom={"64"}
+        onClick={() => exportToPdf()}
       />
 
       <GoBackButton

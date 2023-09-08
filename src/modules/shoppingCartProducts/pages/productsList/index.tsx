@@ -58,6 +58,7 @@ const ProductsList = () => {
     getProductById,
     removeProduct,
     updateProduct,
+    exportToPdf,
   } = useProducts({
     shoppingCartId: shoppingCartId ?? "",
     toggleModal: toggleProductModal,
@@ -73,6 +74,7 @@ const ProductsList = () => {
       handleEdit={getProductById}
       handleDelete={removeProduct}
       toggleDeleteModal={toggleDeleteModal}
+      exportToPdf={exportToPdf}
     />
   );
 };

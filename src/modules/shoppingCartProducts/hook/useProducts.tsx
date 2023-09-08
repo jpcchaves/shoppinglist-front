@@ -106,12 +106,30 @@ const UseProducts = ({
       });
   };
 
+  const exportToPdf = () => {
+    http
+      .get(
+        `${ProductsApiRoute.baseRoute.toString()}/${shoppingCartId}/export-to-pdf`,
+        {
+          responseType: "blob",
+        },
+      )
+      .then(({ data }) => {
+        const blob = new Blob([data], { type: "application/pdf" });
+        const pdfUrl = URL.createObjectURL(blob);
+
+        window.open(pdfUrl, "_blank");
+      })
+      .catch((err) => console.log(err));
+  };
+
   return {
     getAllProducts,
     getProductById,
     addProduct,
     updateProduct,
     removeProduct,
+    exportToPdf,
   };
 };
 
