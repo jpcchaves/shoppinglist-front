@@ -6,6 +6,7 @@ import {
   loadProductList,
 } from "../../../store/products/productSlice";
 import useToast from "../../../hooks/useToast";
+import { FormikValues } from "formik";
 
 enum ProductsApiRoute {
   baseRoute = import.meta.env.VITE_API_PRODUCT_LIST_ROUTE,
@@ -13,9 +14,11 @@ enum ProductsApiRoute {
 
 interface IProps {
   shoppingCartId: string;
+  validation: FormikValues;
+  toggleModal: () => void;
 }
 
-const UseProducts = ({ shoppingCartId }: IProps) => {
+const UseProducts = ({ shoppingCartId, toggleModal, validation }: IProps) => {
   const dispatch = useAppDispatch();
   const { notifySuccess, notifyError } = useToast();
 
@@ -47,8 +50,10 @@ const UseProducts = ({ shoppingCartId }: IProps) => {
     http
       .post(ProductsApiRoute.baseRoute.toString(), data)
       .then(() => {
+        validation.resetForm();
         notifySuccess("Produto adicionado com sucesso!");
         getAllProducts();
+        toggleModal();
       })
       .catch((err) => {
         console.log(err);
@@ -65,6 +70,7 @@ const UseProducts = ({ shoppingCartId }: IProps) => {
       .then(() => {
         notifySuccess("Produto atualizado com sucesso!");
         getAllProducts();
+        toggleModal();
       })
       .catch((err) => {
         console.log(err);

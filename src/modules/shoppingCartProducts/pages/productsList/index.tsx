@@ -15,9 +15,6 @@ const ProductsList = () => {
   };
 
   const { shoppingCartId } = useParams();
-  const { getAllProducts, addProduct } = useProducts({
-    shoppingCartId: shoppingCartId ?? "",
-  });
 
   useEffect(() => {
     getAllProducts();
@@ -44,7 +41,11 @@ const ProductsList = () => {
     },
   });
 
-  console.log(validation.errors, validation.values.urgencyLevel);
+  const { getAllProducts, addProduct } = useProducts({
+    shoppingCartId: shoppingCartId ?? "",
+    toggleModal: toggleProductModal,
+    validation,
+  });
 
   return (
     <ProductsListView
