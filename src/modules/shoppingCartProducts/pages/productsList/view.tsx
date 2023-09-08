@@ -24,12 +24,16 @@ interface IProps {
   isProductModalOpen: boolean;
   toggleProductModal: () => void;
   validation: FormikValues;
+  handleEdit: (id: string) => void;
+  handleDelete: (id: string) => void;
 }
 
 const ProductsListView = ({
   toggleProductModal,
   isProductModalOpen,
   validation,
+  handleEdit,
+  handleDelete,
 }: IProps) => {
   const navigate = useNavigate();
 
@@ -66,11 +70,13 @@ const ProductsListView = ({
                       variant="link"
                       aria-label={"action button"}
                       icon={<EditIcon />}
+                      onClick={() => handleEdit(id!)}
                     />
                     <IconButton
                       variant="link"
                       aria-label={"action button"}
                       icon={<DeleteIcon />}
+                      onClick={() => handleDelete(id!)}
                     />
                   </Box>
                 </Td>

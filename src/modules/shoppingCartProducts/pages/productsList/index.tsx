@@ -6,8 +6,11 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { ProductModel } from "../../models/ProductModel";
 import { UrgencyLevel } from "../../models/urgencyLevel";
+import { useAppSelector } from "../../../../hooks/useRedux";
 
 const ProductsList = () => {
+  const { productById } = useAppSelector((state) => state.product);
+
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
 
   const toggleProductModal = () => {
@@ -23,8 +26,10 @@ const ProductsList = () => {
   const validation = useFormik({
     enableReinitialize: true,
     initialValues: {
-      name: "",
-      urgencyLevel: UrgencyLevel.NORMAL,
+      name: productById ? productById.name : "",
+      urgencyLevel: productById
+        ? productById.urgencyLevel
+        : UrgencyLevel.NORMAL,
     },
     validationSchema: Yup.object({
       name: Yup.string().required("O campo é obrigatório "),
@@ -37,11 +42,21 @@ const ProductsList = () => {
         shoppingCartId: shoppingCartId!,
       };
 
-      addProduct(valuesToSubmit);
+      if (productById) {
+        updateProduct(productById.id!, valuesToSubmit);
+      } else {
+        addProduct(valuesToSubmit);
+      }
     },
   });
 
-  const { getAllProducts, addProduct } = useProducts({
+  const {
+    getAllProducts,
+    addProduct,
+    getProductById,
+    removeProduct,
+    updateProduct,
+  } = useProducts({
     shoppingCartId: shoppingCartId ?? "",
     toggleModal: toggleProductModal,
     validation,
@@ -52,6 +67,8 @@ const ProductsList = () => {
       isProductModalOpen={isProductModalOpen}
       toggleProductModal={toggleProductModal}
       validation={validation}
+      handleEdit={getProductById}
+      handleDelete={removeProduct}
     />
   );
 };

@@ -1,12 +1,13 @@
 import { useAppDispatch } from "../../../hooks/useRedux";
 import { http } from "../../../http/http";
-import { ProductModel } from "../models/ProductModel";
+import { Product, ProductModel } from "../models/ProductModel";
 import {
   loadProductById,
   loadProductList,
 } from "../../../store/products/productSlice";
 import useToast from "../../../hooks/useToast";
 import { FormikValues } from "formik";
+import { ProductByIdModel } from "../models/ProductByIdModel";
 
 enum ProductsApiRoute {
   baseRoute = import.meta.env.VITE_API_PRODUCT_LIST_ROUTE,
@@ -38,8 +39,13 @@ const UseProducts = ({ shoppingCartId, toggleModal, validation }: IProps) => {
       .get(
         `${ProductsApiRoute.baseRoute.toString()}/${shoppingCartId}/${productId}`,
       )
-      .then(({ data }: { data: ProductModel }) => {
-        dispatch(loadProductById(data));
+      .then(({ data }: { data: ProductByIdModel }) => {
+        const product = new Product();
+        product.id = data.id!;
+        product.name = data.name;
+        product.urgencyLevel = data.urgencyLevel;
+        dispatch(loadProductById(product));
+        toggleModal();
       })
       .catch((err) => {
         console.log(err);
