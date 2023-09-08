@@ -17,9 +17,15 @@ interface IProps {
   shoppingCartId: string;
   validation: FormikValues;
   toggleModal: () => void;
+  toggleDeleteModal: () => void;
 }
 
-const UseProducts = ({ shoppingCartId, toggleModal, validation }: IProps) => {
+const UseProducts = ({
+  shoppingCartId,
+  toggleModal,
+  validation,
+  toggleDeleteModal,
+}: IProps) => {
   const dispatch = useAppDispatch();
   const { notifySuccess, notifyError } = useToast();
 
@@ -92,6 +98,7 @@ const UseProducts = ({ shoppingCartId, toggleModal, validation }: IProps) => {
       .then(() => {
         notifySuccess("Produto removido com sucesso!");
         getAllProducts();
+        toggleDeleteModal();
       })
       .catch((err) => {
         console.log(err);

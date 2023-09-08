@@ -19,10 +19,13 @@ import GoBackButton from "../../../../components/goBackButton";
 import { useNavigate } from "react-router-dom";
 import { FormikValues } from "formik";
 import ProductModalForm from "../../components/productModalForm";
+import ModalDelete from "../../../../components/modalDelete";
+import { useState } from "react";
 
 interface IProps {
   isProductModalOpen: boolean;
   toggleProductModal: () => void;
+  toggleDeleteModal: () => void;
   validation: FormikValues;
   handleEdit: (id: string) => void;
   handleDelete: (id: string) => void;
@@ -31,13 +34,19 @@ interface IProps {
 const ProductsListView = ({
   toggleProductModal,
   isProductModalOpen,
+  toggleDeleteModal,
   validation,
   handleEdit,
   handleDelete,
 }: IProps) => {
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const { productList } = useAppSelector((state) => state.product);
+
+  const handleOpenDeleteModal = () => {
+    toggleDeleteModal();
+  };
 
   return (
     <SimpleGrid pt={16} px={{ base: "8", md: "16", lg: "32", xl: "48" }}>
@@ -47,6 +56,7 @@ const ProductsListView = ({
         validation={validation}
       />
 
+      <ModalDelete id={selectedId!} handleDelete={handleDelete} />
       <Heading textAlign={"center"} pb={8}>
         Lista de Compras
       </Heading>
@@ -61,26 +71,31 @@ const ProductsListView = ({
           </Thead>
           <Tbody>
             {(productList || []).map(({ id, name, urgencyLevel }) => (
-              <Tr key={id} className={"actions-hidden-container"}>
-                <Td textAlign={"center"}>{name}</Td>
-                <Td textAlign={"center"}>{urgencyLevel}</Td>
-                <Td textAlign={"end"} position={"relative"} px={"8"}>
-                  <Box className={"actions-hidden"}>
-                    <IconButton
-                      variant="link"
-                      aria-label={"action button"}
-                      icon={<EditIcon />}
-                      onClick={() => handleEdit(id!)}
-                    />
-                    <IconButton
-                      variant="link"
-                      aria-label={"action button"}
-                      icon={<DeleteIcon />}
-                      onClick={() => handleDelete(id!)}
-                    />
-                  </Box>
-                </Td>
-              </Tr>
+              <>
+                <Tr key={id} className={"actions-hidden-container"}>
+                  <Td textAlign={"center"}>{name}</Td>
+                  <Td textAlign={"center"}>{urgencyLevel}</Td>
+                  <Td textAlign={"end"} position={"relative"} px={"8"}>
+                    <Box className={"actions-hidden"}>
+                      <IconButton
+                        variant="link"
+                        aria-label={"action button"}
+                        icon={<EditIcon />}
+                        onClick={() => handleEdit(id!)}
+                      />
+                      <IconButton
+                        variant="link"
+                        aria-label={"action button"}
+                        icon={<DeleteIcon />}
+                        onClick={() => {
+                          setSelectedId(id!);
+                          handleOpenDeleteModal();
+                        }}
+                      />
+                    </Box>
+                  </Td>
+                </Tr>
+              </>
             ))}
           </Tbody>
         </Table>

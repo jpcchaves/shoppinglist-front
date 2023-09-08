@@ -1,23 +1,25 @@
 import ProductsListView from "./view";
 import useProducts from "../../hook/useProducts";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { ProductModel } from "../../models/ProductModel";
 import { UrgencyLevel } from "../../models/urgencyLevel";
 import { useAppSelector } from "../../../../hooks/useRedux";
+import { ModalDeleteContext } from "../../../../contexts/modalDelete/context/ModalDeleteContext";
 
 const ProductsList = () => {
+  const { shoppingCartId } = useParams();
   const { productById } = useAppSelector((state) => state.product);
 
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
 
+  const { toggleDeleteModal } = useContext(ModalDeleteContext);
+
   const toggleProductModal = () => {
     setIsProductModalOpen((prevState) => !prevState);
   };
-
-  const { shoppingCartId } = useParams();
 
   useEffect(() => {
     getAllProducts();
@@ -60,6 +62,7 @@ const ProductsList = () => {
     shoppingCartId: shoppingCartId ?? "",
     toggleModal: toggleProductModal,
     validation,
+    toggleDeleteModal,
   });
 
   return (
@@ -69,6 +72,7 @@ const ProductsList = () => {
       validation={validation}
       handleEdit={getProductById}
       handleDelete={removeProduct}
+      toggleDeleteModal={toggleDeleteModal}
     />
   );
 };
