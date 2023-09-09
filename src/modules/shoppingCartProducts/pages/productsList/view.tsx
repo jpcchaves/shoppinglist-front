@@ -2,6 +2,7 @@ import "./styles/style.css";
 import { useAppSelector } from "../../../../hooks/useRedux";
 import {
   Box,
+  Button,
   Heading,
   IconButton,
   SimpleGrid,
@@ -21,6 +22,7 @@ import { FormikValues } from "formik";
 import ProductModalForm from "../../components/productModalForm";
 import ModalDelete from "../../../../components/modalDelete";
 import { useState } from "react";
+import { BiFileBlank } from "react-icons/bi";
 
 interface IProps {
   isProductModalOpen: boolean;
@@ -108,13 +110,18 @@ const ProductsListView = ({
         aria-label={"float button"}
       />
 
-      <IconButton
+      <Button
         aria-label={"icon button exportToPdf"}
         position={"fixed"}
-        right={"16"}
-        bottom={"64"}
+        right={"24"}
+        top={"12"}
+        size={"sm"}
         onClick={() => exportToPdf()}
-      />
+        leftIcon={<BiFileBlank size={16} />}
+        isDisabled={productList?.length <= 0}
+      >
+        Gerar PDF
+      </Button>
 
       <GoBackButton
         handleClick={() => navigate("/")}
