@@ -114,13 +114,22 @@ const UseProducts = ({
           responseType: "blob",
         },
       )
-      .then(({ data }) => {
-        const blob = new Blob([data], { type: "application/pdf" });
-        const pdfUrl = URL.createObjectURL(blob);
-
-        window.open(pdfUrl, "_blank");
+      .then(({ data }: { data: Blob }) => {
+        openPdfInNewTab(generatePdfUrl(generateBlob(data)));
       })
       .catch((err) => console.log(err));
+  };
+
+  const generateBlob = (data: Blob) => {
+    return new Blob([data], { type: "application/pdf" });
+  };
+
+  const generatePdfUrl = (data: Blob) => {
+    return URL.createObjectURL(generateBlob(data));
+  };
+
+  const openPdfInNewTab = (pdfUrl: string) => {
+    window.open(pdfUrl, "_blank");
   };
 
   return {
