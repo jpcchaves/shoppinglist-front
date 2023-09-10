@@ -12,6 +12,7 @@ import {
   Td,
   Th,
   Thead,
+  Tooltip,
   Tr,
 } from "@chakra-ui/react";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
@@ -110,18 +111,23 @@ const ProductsListView = ({
         aria-label={"float button"}
       />
 
-      <Button
-        aria-label={"icon button exportToPdf"}
-        position={"fixed"}
-        right={"24"}
-        top={"12"}
-        size={"sm"}
-        onClick={() => exportToPdf()}
-        leftIcon={<BiFileBlank size={16} />}
-        isDisabled={productList?.length <= 0}
+      <Tooltip
+        label={"Não é possível gerar o PDF a partir de uma lista vazia"}
+        isDisabled={!(productList?.length <= 0)}
       >
-        Gerar PDF
-      </Button>
+        <Button
+          aria-label={"icon button exportToPdf"}
+          position={"fixed"}
+          right={"24"}
+          top={"12"}
+          size={"sm"}
+          onClick={() => exportToPdf()}
+          leftIcon={<BiFileBlank size={16} />}
+          isDisabled={productList?.length <= 0}
+        >
+          Gerar PDF
+        </Button>
+      </Tooltip>
 
       <GoBackButton
         handleClick={() => navigate("/")}
