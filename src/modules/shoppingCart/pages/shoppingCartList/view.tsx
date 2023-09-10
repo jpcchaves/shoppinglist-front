@@ -45,71 +45,76 @@ const ShoppingCartListView = ({
   const { toggleDeleteModal } = useContext(ModalDeleteContext);
 
   return (
-    <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} gap={4} p={12}>
+    <SimpleGrid pt={16} px={{ base: "8" }}>
       <ShoppingCartFormModal
         isModalOpen={isModalOpen}
         toggleModal={toggleModal}
         validation={validation}
       />
-      {(shoppingCarts || []).map(
-        ({ id, name, description, productsAmount, createdAt }) => (
-          <React.Fragment key={id}>
-            <ModalDelete id={id!} handleDelete={deleteShoppingCart} />
-            <Card key={id} size={"md"} variant={"filled"}>
-              <CardHeader>
-                <Flex gap={"4"}>
-                  <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-                    <Box>
-                      <Heading size="sm">{name}</Heading>
-                    </Box>
+      <Heading textAlign={"center"} pb={8}>
+        Listas de Compras
+      </Heading>
+      <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} gap={4}>
+        {(shoppingCarts || []).map(
+          ({ id, name, description, productsAmount, createdAt }) => (
+            <React.Fragment key={id}>
+              <ModalDelete id={id!} handleDelete={deleteShoppingCart} />
+              <Card key={id} size={"md"} variant={"filled"}>
+                <CardHeader>
+                  <Flex gap={"4"}>
+                    <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
+                      <Box>
+                        <Heading size="sm">{name}</Heading>
+                      </Box>
+                    </Flex>
+                    <PopoverOptions
+                      options={[
+                        {
+                          title: "Editar",
+                          icon: <EditIcon color={"green.300"} />,
+                          shoppingCartId: id!,
+                          handleClick: getShoppingCartById,
+                        },
+                        {
+                          title: "Deletar",
+                          icon: <DeleteIcon color={"red.300"} />,
+                          shoppingCartId: id!,
+                          handleClick: toggleDeleteModal,
+                        },
+                      ]}
+                    />
                   </Flex>
-                  <PopoverOptions
-                    options={[
-                      {
-                        title: "Editar",
-                        icon: <EditIcon color={"green.300"} />,
-                        shoppingCartId: id!,
-                        handleClick: getShoppingCartById,
-                      },
-                      {
-                        title: "Deletar",
-                        icon: <DeleteIcon color={"red.300"} />,
-                        shoppingCartId: id!,
-                        handleClick: toggleDeleteModal,
-                      },
-                    ]}
-                  />
-                </Flex>
-              </CardHeader>
-              <CardBody>
-                <Text>{description}</Text>
-                <Text>Produtos: {productsAmount}</Text>
-              </CardBody>
-              <CardFooter>
-                <VStack w={"full"}>
-                  <Button
-                    onClick={() => navigate(`/${id}`)}
-                    type={"button"}
-                    w={"full"}
-                    colorScheme="blue"
-                  >
-                    Ver mais
-                  </Button>
-                  <Text
-                    w={"full"}
-                    textAlign={"end"}
-                    fontSize="x-small"
-                    fontStyle={"italic"}
-                    color={"whiteAlpha.500"}
-                  >
-                    Criado em {formatDate(createdAt!)}
-                  </Text>
-                </VStack>
-              </CardFooter>
-            </Card>
-          </React.Fragment>
-        ),
-      )}
+                </CardHeader>
+                <CardBody>
+                  <Text>{description}</Text>
+                  <Text>Produtos: {productsAmount}</Text>
+                </CardBody>
+                <CardFooter>
+                  <VStack w={"full"}>
+                    <Button
+                      onClick={() => navigate(`/${id}`)}
+                      type={"button"}
+                      w={"full"}
+                      colorScheme="blue"
+                    >
+                      Ver mais
+                    </Button>
+                    <Text
+                      w={"full"}
+                      textAlign={"end"}
+                      fontSize="x-small"
+                      fontStyle={"italic"}
+                      color={"whiteAlpha.500"}
+                    >
+                      Criado em {formatDate(createdAt!)}
+                    </Text>
+                  </VStack>
+                </CardFooter>
+              </Card>
+            </React.Fragment>
+          ),
+        )}
+      </SimpleGrid>
 
       <FloatButton handleClick={toggleModal} aria-label={"float button"} />
     </SimpleGrid>

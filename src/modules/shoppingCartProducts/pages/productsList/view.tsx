@@ -62,7 +62,7 @@ const ProductsListView = ({
 
       <ModalDelete id={selectedId!} handleDelete={handleDelete} />
       <Heading textAlign={"center"} pb={8}>
-        Lista de Compras
+        Produtos da Lista
       </Heading>
       <TableContainer>
         <Table variant="simple">
