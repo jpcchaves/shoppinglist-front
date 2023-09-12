@@ -42,13 +42,18 @@ const UseShoppingCart = ({ validation, toggleModal }: IProps) => {
   };
 
   const getShoppingCartById = (id: string) => {
+    toggleLoading();
     http
       .get(`${ShoppingCartApiRoute.baseRoute.toString()}/${id}`)
       .then(({ data }: { data: ShoppingCartModel }) => {
         dispatch(loadShoppingCartById(data));
         toggleModal();
+        toggleLoading();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        toggleLoading();
+      });
   };
 
   const updateShoppingCart = (id: string, data: ShoppingCartModel) => {
@@ -61,7 +66,6 @@ const UseShoppingCart = ({ validation, toggleModal }: IProps) => {
       })
       .catch((err) => {
         console.log(err);
-
         notifyError(
           err?.response?.message ||
             "Ocorreu um erro ao editar a lista de compras",
@@ -74,9 +78,9 @@ const UseShoppingCart = ({ validation, toggleModal }: IProps) => {
       .post(ShoppingCartApiRoute.baseRoute.toString(), data)
       .then(() => {
         validation.resetForm();
+        toggleModal();
         getShoppingCarts();
         notifySuccess("Lista de compras criada com sucesso!");
-        toggleModal();
       })
       .catch((err) => {
         console.log(err);

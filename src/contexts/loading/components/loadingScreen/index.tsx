@@ -7,7 +7,7 @@ const LoadingScreen = () => {
       position={"fixed"}
       width={"100vw"}
       height={"100vh"}
-      zIndex={999}
+      zIndex={9999999999999}
     >
       <Center width={"100%"} height={"100%"}>
         <Spinner
