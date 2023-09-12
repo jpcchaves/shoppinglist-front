@@ -54,7 +54,11 @@ const ProductsListView = ({
   };
 
   return (
-    <SimpleGrid pt={16} px={{ base: "8", md: "16", lg: "32", xl: "48" }}>
+    <SimpleGrid
+      pt={16}
+      px={{ base: "8", md: "16", lg: "32", xl: "48" }}
+      pb="32"
+    >
       <ProductModalForm
         toggleModal={toggleProductModal}
         isModalOpen={isProductModalOpen}

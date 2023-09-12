@@ -45,7 +45,7 @@ const ShoppingCartListView = ({
   const { toggleDeleteModal } = useContext(ModalDeleteContext);
 
   return (
-    <SimpleGrid pt={16} px={{ base: "8" }}>
+    <SimpleGrid pt={16} px={{ base: "8" }} pb="32">
       <ShoppingCartFormModal
         isModalOpen={isModalOpen}
         toggleModal={toggleModal}
