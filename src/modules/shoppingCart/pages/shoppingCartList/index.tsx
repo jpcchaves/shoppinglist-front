@@ -6,8 +6,11 @@ import useShoppingCartModal from "../../hook/useShoppingCartModal";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { ShoppingCartModel } from "../../models/ShoppingCartModel";
+import { useDispatch } from "react-redux";
+import { clearStates } from "../../../../store/shoppingCart/shoppingCartSlice";
 
 const ShoppingCartList = () => {
+  const dispatch = useDispatch();
   const { isModalOpen, toggleModal } = useShoppingCartModal();
   const { shoppingCarts, shoppingCartById } = useAppSelector(
     (state) => state.shoppingCart,
@@ -50,6 +53,10 @@ const ShoppingCartList = () => {
 
   useEffect(() => {
     getShoppingCarts();
+
+    return () => {
+      dispatch(clearStates());
+    };
   }, []);
 
   return (

@@ -9,6 +9,7 @@ import useToast from "../../../hooks/useToast";
 import { FormikValues } from "formik";
 import { useContext } from "react";
 import { ModalDeleteContext } from "../../../contexts/modalDelete/context/ModalDeleteContext";
+import { LoadingContext } from "../../../contexts/loading/context/LoadingContext";
 
 interface IProps {
   validation: FormikValues;
@@ -22,16 +23,22 @@ enum ShoppingCartApiRoute {
 const UseShoppingCart = ({ validation, toggleModal }: IProps) => {
   const dispatch = useAppDispatch();
   const { notifySuccess, notifyError } = useToast();
+  const { toggleLoading } = useContext(LoadingContext);
 
   const { toggleDeleteModal } = useContext(ModalDeleteContext);
 
   const getShoppingCarts = () => {
+    toggleLoading();
     http
       .get(ShoppingCartApiRoute.baseRoute.toString())
       .then(({ data }: { data: ShoppingCartModel[] }) => {
+        toggleLoading();
         dispatch(loadShoppingCarts(data));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        toggleLoading();
+        console.log(err);
+      });
   };
 
   const getShoppingCartById = (id: string) => {

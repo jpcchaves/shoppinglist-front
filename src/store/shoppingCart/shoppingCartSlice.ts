@@ -36,6 +36,10 @@ export const shoppingCartSlice = createSlice({
     clearShoppingCartById: (state: ShoppingCartState) => {
       state.shoppingCartById = null!;
     },
+    clearStates: (state) => {
+      state.shoppingCartById = null!;
+      state.shoppingCarts = [];
+    },
   },
 });
 
@@ -43,4 +47,5 @@ export const {
   loadShoppingCarts,
   loadShoppingCartById,
   clearShoppingCartById,
+  clearStates,
 } = shoppingCartSlice.actions;
