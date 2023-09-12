@@ -22,7 +22,7 @@ import { useNavigate } from "react-router-dom";
 import { FormikValues } from "formik";
 import ProductModalForm from "../../components/productModalForm";
 import ModalDelete from "../../../../components/modalDelete";
-import { useState } from "react";
+import React, { useState } from "react";
 import { BiFileBlank } from "react-icons/bi";
 
 interface IProps {
@@ -76,8 +76,8 @@ const ProductsListView = ({
           </Thead>
           <Tbody>
             {(productList || []).map(({ id, name, urgencyLevel }) => (
-              <>
-                <Tr key={id} className={"actions-hidden-container"}>
+              <React.Fragment key={id}>
+                <Tr className={"actions-hidden-container"}>
                   <Td textAlign={"center"}>{name}</Td>
                   <Td textAlign={"center"}>{urgencyLevel}</Td>
                   <Td textAlign={"end"} position={"relative"} px={"8"}>
@@ -100,7 +100,7 @@ const ProductsListView = ({
                     </Box>
                   </Td>
                 </Tr>
-              </>
+              </React.Fragment>
             ))}
           </Tbody>
         </Table>
