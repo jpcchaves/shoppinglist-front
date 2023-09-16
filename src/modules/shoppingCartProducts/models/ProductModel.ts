@@ -1,6 +1,11 @@
 import { UrgencyLevel } from "./urgencyLevel";
 import { UrgencyLevelPtBr } from "./urgencyLevelPtBr";
 
+export type ProductList = {
+  shoppingCartName: string;
+  products: ProductModel[];
+};
+
 export type ProductModel = {
   id?: string;
   name: string;

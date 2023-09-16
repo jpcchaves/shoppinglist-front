@@ -1,17 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ProductModel } from "../../modules/shoppingCartProducts/models/ProductModel";
+import {
+  ProductList,
+  ProductModel,
+} from "../../modules/shoppingCartProducts/models/ProductModel";
 
 interface ProductState {
-  productList: ProductModel[];
+  productList: ProductList;
   productById: ProductModel;
 }
 
-interface PayloadLoadProductList extends PayloadAction<ProductModel[]> {}
+interface PayloadLoadProductList extends PayloadAction<ProductList> {}
 
 interface PayloadLoadProductById extends PayloadAction<ProductModel> {}
 
 const initialState: ProductState = {
-  productList: [],
+  productList: {} as ProductList,
   productById: null!,
 };
 

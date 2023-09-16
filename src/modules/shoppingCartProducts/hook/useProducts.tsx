@@ -1,6 +1,6 @@
 import { useAppDispatch } from "../../../hooks/useRedux";
 import { http } from "../../../http/http";
-import { Product, ProductModel } from "../models/ProductModel";
+import { Product, ProductList, ProductModel } from "../models/ProductModel";
 import {
   loadProductById,
   loadProductList,
@@ -32,7 +32,7 @@ const UseProducts = ({
   const getAllProducts = () => {
     http
       .get(`${ProductsApiRoute.baseRoute.toString()}/${shoppingCartId}`)
-      .then(({ data }: { data: ProductModel[] }) => {
+      .then(({ data }: { data: ProductList }) => {
         dispatch(loadProductList(data));
       })
       .catch((err) => {

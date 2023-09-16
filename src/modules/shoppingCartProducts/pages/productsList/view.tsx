@@ -67,7 +67,7 @@ const ProductsListView = ({
 
       <ModalDelete id={selectedId!} handleDelete={handleDelete} />
       <Heading textAlign={"center"} pb={8}>
-        Produtos da Lista
+        Produtos da Lista {productList?.shoppingCartName}
       </Heading>
       <TableContainer>
         <Table variant="simple">
@@ -79,7 +79,7 @@ const ProductsListView = ({
             </Tr>
           </Thead>
           <Tbody>
-            {(productList || []).map(({ id, name, urgencyLevel }) => (
+            {(productList.products || []).map(({ id, name, urgencyLevel }) => (
               <React.Fragment key={id}>
                 <Tr className={"actions-hidden-container"}>
                   <Td textAlign={"center"}>{name}</Td>
@@ -117,7 +117,7 @@ const ProductsListView = ({
 
       <Tooltip
         label={"Não é possível gerar o PDF a partir de uma lista vazia"}
-        isDisabled={!(productList?.length <= 0)}
+        isDisabled={!(productList?.products?.length <= 0)}
       >
         <Button
           aria-label={"icon button exportToPdf"}
@@ -127,7 +127,7 @@ const ProductsListView = ({
           size={"sm"}
           onClick={() => exportToPdf()}
           leftIcon={<BiFileBlank size={16} />}
-          isDisabled={productList?.length <= 0}
+          isDisabled={productList?.products?.length <= 0}
         >
           Gerar PDF
         </Button>
