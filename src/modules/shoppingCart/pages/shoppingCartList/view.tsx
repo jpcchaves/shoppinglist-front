@@ -5,8 +5,12 @@ import {
   CardBody,
   CardFooter,
   CardHeader,
+  Container,
   Flex,
   Heading,
+  Input,
+  InputGroup,
+  InputLeftAddon,
   SimpleGrid,
   Text,
   VStack,
@@ -16,7 +20,7 @@ import { ShoppingCartModel } from "../../models/ShoppingCartModel";
 import FloatButton from "../../../../components/floatButton";
 import ShoppingCartFormModal from "../../components/shoppingCartFormModal";
 import { FormikValues } from "formik";
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { DeleteIcon, EditIcon, SearchIcon } from "@chakra-ui/icons";
 import PopoverOptions from "../../components/popoverOptions";
 import React, { useContext } from "react";
 import { ModalDeleteContext } from "../../../../contexts/modalDelete/context/ModalDeleteContext";
@@ -54,6 +58,20 @@ const ShoppingCartListView = ({
       <Heading textAlign={"center"} pb={8}>
         Listas de Compras
       </Heading>
+      <Container mb={6}>
+        <Heading size={"sm"} textAlign={"center"} mb={2}>
+          Busque uma lista de compras pelo nome
+        </Heading>
+        <InputGroup>
+          <InputLeftAddon>
+            <SearchIcon />
+          </InputLeftAddon>
+          <Input type="text" name="name" me={2} />
+          <Button type="button" colorScheme={"blue"}>
+            Buscar
+          </Button>
+        </InputGroup>
+      </Container>
       <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} gap={4}>
         {(shoppingCarts || []).map(
           ({ id, name, description, productsAmount, createdAt }) => (
