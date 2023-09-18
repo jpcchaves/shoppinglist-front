@@ -70,44 +70,52 @@ const ProductsListView = ({
         Produtos da Lista {productList?.shoppingCartName}
       </Heading>
       <TableContainer>
-        <Table variant="simple">
-          <Thead>
-            <Tr>
-              <Th textAlign={"center"}>Produtos</Th>
-              <Th textAlign={"center"}>Nível de Urgência</Th>
-              <Th></Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {(productList.products || []).map(({ id, name, urgencyLevel }) => (
-              <React.Fragment key={id}>
-                <Tr className={"actions-hidden-container"}>
-                  <Td textAlign={"center"}>{name}</Td>
-                  <Td textAlign={"center"}>{urgencyLevel}</Td>
-                  <Td textAlign={"end"} position={"relative"} px={"8"}>
-                    <Box className={"actions-hidden"}>
-                      <IconButton
-                        variant="link"
-                        aria-label={"action button"}
-                        icon={<EditIcon />}
-                        onClick={() => handleEdit(id!)}
-                      />
-                      <IconButton
-                        variant="link"
-                        aria-label={"action button"}
-                        icon={<DeleteIcon />}
-                        onClick={() => {
-                          setSelectedId(id!);
-                          handleOpenDeleteModal();
-                        }}
-                      />
-                    </Box>
-                  </Td>
-                </Tr>
-              </React.Fragment>
-            ))}
-          </Tbody>
-        </Table>
+        {productList?.products?.length ? (
+          <Table variant="simple">
+            <Thead>
+              <Tr>
+                <Th textAlign={"center"}>Produtos</Th>
+                <Th textAlign={"center"}>Nível de Urgência</Th>
+                <Th></Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {(productList.products || []).map(
+                ({ id, name, urgencyLevel }) => (
+                  <React.Fragment key={id}>
+                    <Tr className={"actions-hidden-container"}>
+                      <Td textAlign={"center"}>{name}</Td>
+                      <Td textAlign={"center"}>{urgencyLevel}</Td>
+                      <Td textAlign={"end"} position={"relative"} px={"8"}>
+                        <Box className={"actions-hidden"}>
+                          <IconButton
+                            variant="link"
+                            aria-label={"action button"}
+                            icon={<EditIcon />}
+                            onClick={() => handleEdit(id!)}
+                          />
+                          <IconButton
+                            variant="link"
+                            aria-label={"action button"}
+                            icon={<DeleteIcon />}
+                            onClick={() => {
+                              setSelectedId(id!);
+                              handleOpenDeleteModal();
+                            }}
+                          />
+                        </Box>
+                      </Td>
+                    </Tr>
+                  </React.Fragment>
+                ),
+              )}
+            </Tbody>
+          </Table>
+        ) : (
+          <Heading size={"md"} textAlign={"center"} mt={12}>
+            Ainda não há produtos cadastrados
+          </Heading>
+        )}
       </TableContainer>
 
       <FloatButton
