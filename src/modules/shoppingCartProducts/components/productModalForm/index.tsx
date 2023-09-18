@@ -55,10 +55,7 @@ const ProductModalForm = ({ isModalOpen, toggleModal, validation }: IProps) => {
               ) : null}
             </FormControl>
 
-            <RadioGroup
-              pt={"4"}
-              defaultValue={validation.values.urgencyLevel || "MEDIUM"}
-            >
+            <RadioGroup pt={"4"} value={validation.values.urgencyLevel}>
               <Stack spacing={5} direction={{ sm: "row", base: "column" }}>
                 {radioButtons.map(({ id, value, label, color }) => (
                   <Radio

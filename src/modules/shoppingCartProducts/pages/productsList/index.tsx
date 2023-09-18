@@ -66,9 +66,6 @@ const ProductsList = () => {
     toggleDeleteModal,
   });
 
-  console.log(validation.values);
-  console.log(productById);
-
   return (
     <ProductsListView
       isProductModalOpen={isProductModalOpen}

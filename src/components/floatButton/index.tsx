@@ -24,9 +24,9 @@ const FloatButton = ({ handleClick, ...rest }: IProps) => {
       borderRadius={"full"}
       size="lg"
       onClick={() => {
-        handleClick();
-        dispatch(clearShoppingCartById());
         dispatch(clearProduct());
+        dispatch(clearShoppingCartById());
+        handleClick();
       }}
     />
   );
