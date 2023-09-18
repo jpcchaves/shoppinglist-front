@@ -41,6 +41,15 @@ const UseShoppingCart = ({ validation, toggleModal }: IProps) => {
       });
   };
 
+  const filterShoppingCarts = (searchInput: string) => {
+    http
+      .get(`${ShoppingCartApiRoute.baseRoute.toString()}?name=${searchInput}`)
+      .then(({ data }: { data: ShoppingCartModel[] }) =>
+        dispatch(loadShoppingCarts(data)),
+      )
+      .catch((err) => console.log(err));
+  };
+
   const getShoppingCartById = (id: string) => {
     toggleLoading();
     http
@@ -113,6 +122,7 @@ const UseShoppingCart = ({ validation, toggleModal }: IProps) => {
     createShoppingCart,
     deleteShoppingCart,
     getShoppingCartById,
+    filterShoppingCarts,
     updateShoppingCart,
   };
 };
