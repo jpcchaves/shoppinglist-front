@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useShoppingCart from "../../hook/useShoppingCart";
 import { useAppSelector } from "../../../../hooks/useRedux";
 import ShoppingCartListView from "./view";
@@ -10,11 +10,17 @@ import { useDispatch } from "react-redux";
 import { clearStates } from "../../../../store/shoppingCart/shoppingCartSlice";
 
 const ShoppingCartList = () => {
+  const [searchInput, setSearchInput] = useState("");
+
   const dispatch = useDispatch();
   const { isModalOpen, toggleModal } = useShoppingCartModal();
   const { shoppingCarts, shoppingCartById } = useAppSelector(
     (state) => state.shoppingCart,
   );
+
+  const handleSearchInput = (e: string) => {
+    setSearchInput(e);
+  };
 
   const validation = useFormik({
     enableReinitialize: true,
@@ -46,6 +52,7 @@ const ShoppingCartList = () => {
     deleteShoppingCart,
     getShoppingCartById,
     updateShoppingCart,
+    filterShoppingCarts,
   } = useShoppingCart({
     validation,
     toggleModal,
@@ -64,7 +71,11 @@ const ShoppingCartList = () => {
       isModalOpen={isModalOpen}
       toggleModal={toggleModal}
       shoppingCarts={shoppingCarts}
+      searchInput={searchInput}
+      handleSearchInput={handleSearchInput}
       validation={validation}
+      getShoppingCarts={getShoppingCarts}
+      filterShoppingCarts={filterShoppingCarts}
       deleteShoppingCart={deleteShoppingCart}
       getShoppingCartById={getShoppingCartById}
     />

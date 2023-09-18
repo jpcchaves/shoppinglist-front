@@ -11,6 +11,7 @@ import {
   Input,
   InputGroup,
   InputLeftAddon,
+  InputRightAddon,
   SimpleGrid,
   Text,
   VStack,
@@ -20,7 +21,7 @@ import { ShoppingCartModel } from "../../models/ShoppingCartModel";
 import FloatButton from "../../../../components/floatButton";
 import ShoppingCartFormModal from "../../components/shoppingCartFormModal";
 import { FormikValues } from "formik";
-import { DeleteIcon, EditIcon, SearchIcon } from "@chakra-ui/icons";
+import { CloseIcon, DeleteIcon, EditIcon, SearchIcon } from "@chakra-ui/icons";
 import PopoverOptions from "../../components/popoverOptions";
 import React, { useContext } from "react";
 import { ModalDeleteContext } from "../../../../contexts/modalDelete/context/ModalDeleteContext";
@@ -34,6 +35,10 @@ interface IProps {
   validation: FormikValues;
   deleteShoppingCart: (shoppingCartId: string) => void;
   getShoppingCartById: (shoppingCartId: string) => void;
+  searchInput: string;
+  handleSearchInput: (e: string) => void;
+  filterShoppingCarts: (searchInput: string) => void;
+  getShoppingCarts: () => void;
 }
 
 const ShoppingCartListView = ({
@@ -43,6 +48,10 @@ const ShoppingCartListView = ({
   validation,
   deleteShoppingCart,
   getShoppingCartById,
+  searchInput,
+  handleSearchInput,
+  filterShoppingCarts,
+  getShoppingCarts,
 }: IProps) => {
   const navigate = useNavigate();
 
@@ -66,8 +75,28 @@ const ShoppingCartListView = ({
           <InputLeftAddon>
             <SearchIcon />
           </InputLeftAddon>
-          <Input type="text" name="name" me={2} />
-          <Button type="button" colorScheme={"blue"}>
+          <Input
+            value={searchInput}
+            onChange={(e) => handleSearchInput(e.target.value)}
+            type="text"
+            name="name"
+          />
+          <InputRightAddon
+            me={2}
+            cursor={searchInput.length ? "pointer" : "not-allowed"}
+            onClick={() => {
+              handleSearchInput("");
+              getShoppingCarts();
+            }}
+          >
+            <CloseIcon />
+          </InputRightAddon>
+          <Button
+            type="button"
+            colorScheme={"blue"}
+            isDisabled={!searchInput.length}
+            onClick={() => filterShoppingCarts(searchInput)}
+          >
             Buscar
           </Button>
         </InputGroup>
