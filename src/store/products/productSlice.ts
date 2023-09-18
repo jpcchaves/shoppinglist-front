@@ -29,7 +29,11 @@ export const productSlice = createSlice({
     loadProductById: (state: ProductState, action: PayloadLoadProductById) => {
       state.productById = action.payload;
     },
+    clearProduct: (state: ProductState) => {
+      state.productById = null!;
+    },
   },
 });
 
-export const { loadProductList, loadProductById } = productSlice.actions;
+export const { loadProductList, loadProductById, clearProduct } =
+  productSlice.actions;

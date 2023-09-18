@@ -17,10 +17,6 @@ const ProductsList = () => {
 
   const { toggleDeleteModal } = useContext(ModalDeleteContext);
 
-  const toggleProductModal = () => {
-    setIsProductModalOpen((prevState) => !prevState);
-  };
-
   useEffect(() => {
     getAllProducts();
   }, []);
@@ -52,6 +48,10 @@ const ProductsList = () => {
     },
   });
 
+  const toggleProductModal = () => {
+    setIsProductModalOpen((prevState) => !prevState);
+  };
+
   const {
     getAllProducts,
     addProduct,
@@ -65,6 +65,9 @@ const ProductsList = () => {
     validation,
     toggleDeleteModal,
   });
+
+  console.log(validation.values);
+  console.log(productById);
 
   return (
     <ProductsListView

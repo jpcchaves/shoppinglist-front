@@ -1,6 +1,10 @@
 import { useAppDispatch } from "../../../hooks/useRedux";
 import { http } from "../../../http/http";
-import { Product, ProductList, ProductModel } from "../models/ProductModel";
+import {
+  ProductList,
+  ProductModel,
+  setUrgencyLevel,
+} from "../models/ProductModel";
 import {
   loadProductById,
   loadProductList,
@@ -46,10 +50,12 @@ const UseProducts = ({
         `${ProductsApiRoute.baseRoute.toString()}/${shoppingCartId}/${productId}`,
       )
       .then(({ data }: { data: ProductByIdModel }) => {
-        const product = new Product();
-        product.id = data.id!;
-        product.name = data.name;
-        product.urgencyLevel = data.urgencyLevel;
+        const urgencyLevel = setUrgencyLevel(data.urgencyLevel);
+        const product = {
+          id: data.id!,
+          name: data.name,
+          urgencyLevel,
+        };
         dispatch(loadProductById(product));
         toggleModal();
       })

@@ -13,54 +13,17 @@ export type ProductModel = {
   shoppingCartId?: string;
 };
 
-export class Product {
-  private _id?: string;
-  private _name: string;
-  private _urgencyLevel: UrgencyLevel;
-
-  constructor(id?: string, name?: string, urgencyLevel?: UrgencyLevel) {
-    this._id = id!;
-    this._name = name!;
-    this._urgencyLevel = urgencyLevel!;
+export const setUrgencyLevel = (value: UrgencyLevelPtBr) => {
+  switch (value) {
+    case UrgencyLevelPtBr.MuitoUrgente:
+      return UrgencyLevel.CRITICAL;
+    case UrgencyLevelPtBr.Urgente:
+      return UrgencyLevel.HIGH;
+    case UrgencyLevelPtBr.Normal:
+      return UrgencyLevel.NORMAL;
+    case UrgencyLevelPtBr.PodeEsperar:
+      return UrgencyLevel.LOW;
+    case UrgencyLevelPtBr.TalvezComprar:
+      return UrgencyLevel.LOWEST;
   }
-
-  get id(): string {
-    return this._id!;
-  }
-
-  set id(value: string) {
-    this._id = value;
-  }
-
-  get name(): string {
-    return this._name;
-  }
-
-  set name(value: string) {
-    this._name = value;
-  }
-
-  get urgencyLevel(): UrgencyLevel {
-    return this._urgencyLevel;
-  }
-
-  set urgencyLevel(value: UrgencyLevelPtBr) {
-    switch (value) {
-      case UrgencyLevelPtBr.MuitoUrgente:
-        this._urgencyLevel = UrgencyLevel.CRITICAL;
-        break;
-      case UrgencyLevelPtBr.Urgente:
-        this._urgencyLevel = UrgencyLevel.HIGH;
-        break;
-      case UrgencyLevelPtBr.Normal:
-        this._urgencyLevel = UrgencyLevel.NORMAL;
-        break;
-      case UrgencyLevelPtBr.PodeEsperar:
-        this._urgencyLevel = UrgencyLevel.LOW;
-        break;
-      case UrgencyLevelPtBr.TalvezComprar:
-        this._urgencyLevel = UrgencyLevel.LOWEST;
-        break;
-    }
-  }
-}
+};

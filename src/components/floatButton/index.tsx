@@ -2,6 +2,7 @@ import { IconButton, IconButtonProps } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { useAppDispatch } from "../../hooks/useRedux";
 import { clearShoppingCartById } from "../../store/shoppingCart/shoppingCartSlice";
+import { clearProduct } from "../../store/products/productSlice";
 
 interface IProps extends IconButtonProps {
   handleClick: () => void;
@@ -25,6 +26,7 @@ const FloatButton = ({ handleClick, ...rest }: IProps) => {
       onClick={() => {
         handleClick();
         dispatch(clearShoppingCartById());
+        dispatch(clearProduct());
       }}
     />
   );
