@@ -85,8 +85,12 @@ const ShoppingCartListView = ({
             me={2}
             cursor={searchInput.length ? "pointer" : "not-allowed"}
             onClick={() => {
-              handleSearchInput("");
-              getShoppingCarts();
+              if (searchInput.length) {
+                handleSearchInput("");
+                getShoppingCarts();
+              } else {
+                return;
+              }
             }}
           >
             <CloseIcon />
