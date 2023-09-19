@@ -17,9 +17,14 @@ import Lottie from "react-lottie";
 interface IProps {
   id: string;
   handleDelete: (id: string) => void;
+  message?: string;
 }
 
-const ModalDelete = ({ id, handleDelete }: IProps) => {
+const ModalDelete = ({
+  id,
+  handleDelete,
+  message = "Atenção! O item será removido permanentemente, deseja continuar?",
+}: IProps) => {
   const { isModalDeleteOpen, toggleDeleteModal } =
     useContext(ModalDeleteContext);
 
@@ -36,10 +41,7 @@ const ModalDelete = ({ id, handleDelete }: IProps) => {
         <ModalCloseButton />
         <Lottie width={"300px"} options={{ animationData: TrashAnimation }} />
         <ModalBody pb={6}>
-          <Text textAlign={"center"}>
-            A lista de compras será removida <strong>permanentemente.</strong>{" "}
-            Deseja continuar?
-          </Text>
+          <Text textAlign={"center"}>{message}</Text>
         </ModalBody>
 
         <ModalFooter>
