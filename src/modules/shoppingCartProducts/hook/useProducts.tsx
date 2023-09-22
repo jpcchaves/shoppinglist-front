@@ -15,6 +15,7 @@ import { ProductByIdModel } from "../models/ProductByIdModel";
 
 enum ProductsApiRoute {
   baseRoute = import.meta.env.VITE_API_PRODUCT_LIST_ROUTE,
+  baseRouteV2 = import.meta.env.VITE_API_PRODUCT_LIST_ROUTE_V2,
 }
 
 interface IProps {
@@ -35,7 +36,7 @@ const UseProducts = ({
 
   const getAllProducts = () => {
     http
-      .get(`${ProductsApiRoute.baseRoute.toString()}/${shoppingCartId}`)
+      .get(`${ProductsApiRoute.baseRouteV2.toString()}/${shoppingCartId}`)
       .then(({ data }: { data: ProductList }) => {
         dispatch(loadProductList(data));
       })
