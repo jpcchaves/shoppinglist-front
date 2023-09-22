@@ -4,6 +4,7 @@ import { UrgencyLevelPtBr } from "./urgencyLevelPtBr";
 export type ProductList = {
   shoppingCartName: string;
   products: ProductModel[];
+  shoppingListTotalPrice?: string;
 };
 
 export type ProductModel = {
@@ -11,6 +12,9 @@ export type ProductModel = {
   name: string;
   urgencyLevel: UrgencyLevel;
   shoppingCartId?: string;
+  productPrice?: string;
+  productQuantity?: string;
+  totalPrice?: string;
 };
 
 export const setUrgencyLevel = (value: UrgencyLevelPtBr) => {
