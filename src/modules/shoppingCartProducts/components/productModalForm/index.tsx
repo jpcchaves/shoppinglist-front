@@ -13,10 +13,12 @@ import {
   ModalOverlay,
   Radio,
   RadioGroup,
+  SimpleGrid,
   Stack,
 } from "@chakra-ui/react";
 import { FormikValues } from "formik";
 import { FormEvent } from "react";
+import { NumericFormat } from "react-number-format";
 import { radioButtons } from "../../utils/radioButtonsData";
 
 interface IProps {
@@ -54,6 +56,41 @@ const ProductModalForm = ({ isModalOpen, toggleModal, validation }: IProps) => {
                 <FormErrorMessage>{validation.errors.name}</FormErrorMessage>
               ) : null}
             </FormControl>
+            <SimpleGrid gap={2} columns={2}>
+              <FormControl>
+                <FormLabel mt="2">Quantidade</FormLabel>
+                <Input
+                  as={NumericFormat}
+                  name="productQuantity"
+                  value={validation.values?.productQuantity}
+                  onBlur={validation.handleBlur}
+                  displayType="input"
+                  thousandSeparator=""
+                  decimalSeparator="."
+                  decimalScale={0}
+                  fixedDecimalScale
+                  allowNegative={false}
+                  onChange={validation.handleChange}
+                />
+              </FormControl>
+              <FormControl>
+                <FormLabel mt="2">Preço</FormLabel>
+                <Input
+                  as={NumericFormat}
+                  name="productPrice"
+                  value={validation.values?.productPrice}
+                  onBlur={validation.handleBlur}
+                  displayType="input"
+                  thousandSeparator="."
+                  decimalSeparator=","
+                  prefix="R$"
+                  decimalScale={2}
+                  fixedDecimalScale
+                  allowNegative={false}
+                  onChange={validation.handleChange}
+                />
+              </FormControl>
+            </SimpleGrid>
 
             <RadioGroup pt={"4"} value={validation.values.urgencyLevel}>
               <Stack spacing={5} direction={{ sm: "row", base: "column" }}>
