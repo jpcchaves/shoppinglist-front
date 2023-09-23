@@ -1,5 +1,4 @@
-import "./styles/style.css";
-import { useAppSelector } from "../../../../hooks/useRedux";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -15,15 +14,17 @@ import {
   Tooltip,
   Tr,
 } from "@chakra-ui/react";
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
-import FloatButton from "../../../../components/floatButton";
-import GoBackButton from "../../../../components/goBackButton";
-import { useNavigate } from "react-router-dom";
 import { FormikValues } from "formik";
-import ProductModalForm from "../../components/productModalForm";
-import ModalDelete from "../../../../components/modalDelete";
 import React, { useState } from "react";
 import { BiFileBlank } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
+import FloatButton from "../../../../components/floatButton";
+import GoBackButton from "../../../../components/goBackButton";
+import ModalDelete from "../../../../components/modalDelete";
+import { useAppSelector } from "../../../../hooks/useRedux";
+import ProductModalForm from "../../components/productModalForm";
+import { formatCurrency, replaceDot } from "../../utils/formatCurrency";
+import "./styles/style.css";
 
 interface IProps {
   isProductModalOpen: boolean;
@@ -56,7 +57,7 @@ const ProductsListView = ({
   return (
     <SimpleGrid
       pt={16}
-      px={{ base: "8", md: "16", lg: "32", xl: "48" }}
+      px={{ base: "8", md: "16", lg: "24", xl: "32" }}
       pb="32"
     >
       <ProductModalForm
@@ -76,16 +77,33 @@ const ProductsListView = ({
               <Tr>
                 <Th textAlign={"center"}>Produtos</Th>
                 <Th textAlign={"center"}>Nível de Urgência</Th>
+                <Th textAlign={"center"}>Quantidade</Th>
+                <Th textAlign={"center"}>Preço</Th>
+                <Th textAlign={"center"}>Total</Th>
                 <Th></Th>
               </Tr>
             </Thead>
             <Tbody>
               {(productList.products || []).map(
-                ({ id, name, urgencyLevel }) => (
+                ({
+                  id,
+                  name,
+                  urgencyLevel,
+                  productPrice,
+                  productQuantity,
+                  totalPrice,
+                }) => (
                   <React.Fragment key={id}>
                     <Tr className={"actions-hidden-container"}>
                       <Td textAlign={"center"}>{name}</Td>
                       <Td textAlign={"center"}>{urgencyLevel}</Td>
+                      <Td textAlign={"center"}>{productQuantity}</Td>
+                      <Td textAlign={"center"}>
+                        {replaceDot(formatCurrency(productPrice))}
+                      </Td>
+                      <Td textAlign={"center"}>
+                        {replaceDot(formatCurrency(totalPrice))}
+                      </Td>
                       <Td textAlign={"end"} position={"relative"} px={"8"}>
                         <Box className={"actions-hidden"}>
                           <IconButton
