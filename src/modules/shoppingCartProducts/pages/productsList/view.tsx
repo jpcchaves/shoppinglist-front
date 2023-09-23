@@ -127,6 +127,18 @@ const ProductsListView = ({
                   </React.Fragment>
                 ),
               )}
+              <Tr>
+                <Td></Td>
+                <Td></Td>
+                <Td></Td>
+                <Td textAlign="center">Total:</Td>
+                <Td textAlign={"center"}>
+                  {replaceDot(
+                    formatCurrency(productList?.shoppingListTotalPrice),
+                  )}
+                </Td>
+                <Td></Td>
+              </Tr>
             </Tbody>
           </Table>
         ) : (
