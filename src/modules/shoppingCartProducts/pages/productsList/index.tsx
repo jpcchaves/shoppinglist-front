@@ -7,6 +7,7 @@ import { useAppSelector } from "../../../../hooks/useRedux";
 import useProducts from "../../hook/useProducts";
 import { ProductModel } from "../../models/ProductModel";
 import { UrgencyLevel } from "../../models/urgencyLevel";
+import { removeCurrencyMask } from "../../utils/formatCurrency";
 import ProductsListView from "./view";
 
 const ProductsList = () => {
@@ -16,13 +17,6 @@ const ProductsList = () => {
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
 
   const { toggleDeleteModal } = useContext(ModalDeleteContext);
-
-  const removeCurrencyMask = (value: string): string => {
-    const numericValue = value.replace(/[^\d,]/g, "");
-    const cleanedValue = numericValue.replace(",", ".");
-
-    return cleanedValue;
-  };
 
   useEffect(() => {
     getAllProducts();
@@ -35,8 +29,8 @@ const ProductsList = () => {
       urgencyLevel: productById
         ? productById.urgencyLevel
         : UrgencyLevel.NORMAL,
-      productPrice: "",
-      productQuantity: "",
+      productPrice: productById ? String(productById.productPrice!) : "",
+      productQuantity: productById ? productById.productQuantity : "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("O campo é obrigatório "),
@@ -49,7 +43,7 @@ const ProductsList = () => {
         name: values.name,
         urgencyLevel: values.urgencyLevel,
         shoppingCartId: shoppingCartId!,
-        productPrice: removeCurrencyMask(values.productPrice),
+        productPrice: removeCurrencyMask(values.productPrice!),
         productQuantity: values.productQuantity,
       };
 
