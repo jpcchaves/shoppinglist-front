@@ -1,17 +1,17 @@
+import { FormikValues } from "formik";
 import { useAppDispatch } from "../../../hooks/useRedux";
+import useToast from "../../../hooks/useToast";
 import { http } from "../../../http/http";
+import {
+  loadProductById,
+  loadProductList,
+} from "../../../store/products/productSlice";
+import { ProductByIdModel } from "../models/ProductByIdModel";
 import {
   ProductList,
   ProductModel,
   setUrgencyLevel,
 } from "../models/ProductModel";
-import {
-  loadProductById,
-  loadProductList,
-} from "../../../store/products/productSlice";
-import useToast from "../../../hooks/useToast";
-import { FormikValues } from "formik";
-import { ProductByIdModel } from "../models/ProductByIdModel";
 
 enum ProductsApiRoute {
   baseRoute = import.meta.env.VITE_API_PRODUCT_LIST_ROUTE,
@@ -56,6 +56,8 @@ const UseProducts = ({
           id: data.id!,
           name: data.name,
           urgencyLevel,
+          productPrice: data.productPrice,
+          productQuantity: data.productQuantity,
         };
         dispatch(loadProductById(product));
         toggleModal();
