@@ -5,4 +5,7 @@ export type ProductByIdModel = {
   name: string;
   urgencyLevel: UrgencyLevelPtBr;
   shoppingCartId?: string;
+  productPrice?: string;
+  productQuantity?: string;
+  totalPrice?: string;
 };
