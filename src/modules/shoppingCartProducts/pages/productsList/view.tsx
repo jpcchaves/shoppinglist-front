@@ -23,7 +23,7 @@ import GoBackButton from "../../../../components/goBackButton";
 import ModalDelete from "../../../../components/modalDelete";
 import { useAppSelector } from "../../../../hooks/useRedux";
 import ProductModalForm from "../../components/productModalForm";
-import { formatCurrency, replaceDot } from "../../utils/formatCurrency";
+import { formatCurrency } from "../../utils/formatCurrency";
 import "./styles/style.css";
 
 interface IProps {
@@ -99,11 +99,9 @@ const ProductsListView = ({
                       <Td textAlign={"center"}>{urgencyLevel}</Td>
                       <Td textAlign={"center"}>{productQuantity}</Td>
                       <Td textAlign={"center"}>
-                        {replaceDot(formatCurrency(productPrice))}
+                        {formatCurrency(productPrice)}
                       </Td>
-                      <Td textAlign={"center"}>
-                        {replaceDot(formatCurrency(totalPrice))}
-                      </Td>
+                      <Td textAlign={"center"}>{formatCurrency(totalPrice)}</Td>
                       <Td textAlign={"end"} position={"relative"} px={"8"}>
                         <Box className={"actions-hidden"}>
                           <IconButton
@@ -133,9 +131,7 @@ const ProductsListView = ({
                 <Td></Td>
                 <Td textAlign="center">Total:</Td>
                 <Td textAlign={"center"}>
-                  {replaceDot(
-                    formatCurrency(productList?.shoppingListTotalPrice),
-                  )}
+                  {formatCurrency(productList?.shoppingListTotalPrice)}
                 </Td>
                 <Td></Td>
               </Tr>
