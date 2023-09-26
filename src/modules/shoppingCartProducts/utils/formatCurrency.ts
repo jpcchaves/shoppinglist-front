@@ -10,10 +10,10 @@ export const formatCurrency = (rawValue: string | undefined): string => {
     const rawValueNumber =  Number(rawValue);
 
     const formattedValue = rawValueNumber.toFixed(2);
-    const [wholePart, decimalPart] = formattedValue.split('.');
-    const formattedWholePart = wholePart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    const [integerPart, decimalPart] = formattedValue.split('.');
+    const replacedIntegerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 
-    return `R$ ${formattedWholePart},${decimalPart}`;
+    return `R$ ${replacedIntegerPart},${decimalPart}`;
 
 }
 
