@@ -7,14 +7,12 @@ export const replaceSemiColon = (valueWithSemiColon: string): string => {
 }
 
 export const formatCurrency = (rawValue: string | undefined): string => {
-    const rawValueNumber =  Number(rawValue);
+  const BRL = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
 
-    const formattedValue = rawValueNumber.toFixed(2);
-    const [integerPart, decimalPart] = formattedValue.split('.');
-    const replacedIntegerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-
-    return `R$ ${replacedIntegerPart},${decimalPart}`;
-
+  return BRL.format(Number(rawValue));
 }
 
 export const removeCurrencyMask = (value: string): string => {
