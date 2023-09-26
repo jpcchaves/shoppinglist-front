@@ -30,13 +30,15 @@ const ProductsList = () => {
         ? productById.urgencyLevel
         : UrgencyLevel.NORMAL,
       productPrice: productById ? String(productById.productPrice!) : "",
-      productQuantity: productById ? productById.productQuantity : "",
+      productQuantity: productById ? productById.productQuantity : "1",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("O campo é obrigatório "),
+      name: Yup.string().required("O campo é obrigatório"),
       urgencyLevel: Yup.string().oneOf(Object.values(UrgencyLevel)),
-      productPrice: Yup.string().nullable(),
-      productQuantity: Yup.string().nullable(),
+      productPrice: Yup.string().required("O campo é obrigatório "),
+      productQuantity: Yup.string()
+        .min(1, "A quantidade deve ser maior ou igual a 1")
+        .required("O campo é obrigatório"),
     }),
     onSubmit: (values) => {
       const valuesToSubmit: ProductModel = {
@@ -54,6 +56,8 @@ const ProductsList = () => {
       }
     },
   });
+
+  console.log(validation.errors);
 
   const toggleProductModal = () => {
     setIsProductModalOpen((prevState) => !prevState);
