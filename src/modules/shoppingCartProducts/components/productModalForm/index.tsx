@@ -57,7 +57,14 @@ const ProductModalForm = ({ isModalOpen, toggleModal, validation }: IProps) => {
               ) : null}
             </FormControl>
             <SimpleGrid gap={2} columns={2}>
-              <FormControl>
+              <FormControl
+                isInvalid={
+                  !!(
+                    validation.errors.productQuantity &&
+                    validation.touched.productQuantity
+                  )
+                }
+              >
                 <FormLabel mt="2">Quantidade</FormLabel>
                 <Input
                   as={NumericFormat}
@@ -72,8 +79,21 @@ const ProductModalForm = ({ isModalOpen, toggleModal, validation }: IProps) => {
                   allowNegative={false}
                   onChange={validation.handleChange}
                 />
+                {validation.errors.productQuantity &&
+                validation.touched.productQuantity ? (
+                  <FormErrorMessage>
+                    {validation.errors.productQuantity}
+                  </FormErrorMessage>
+                ) : null}
               </FormControl>
-              <FormControl>
+              <FormControl
+                isInvalid={
+                  !!(
+                    validation.errors.productPrice &&
+                    validation.touched.productPrice
+                  )
+                }
+              >
                 <FormLabel mt="2">Preço</FormLabel>
                 <Input
                   as={NumericFormat}
@@ -89,6 +109,12 @@ const ProductModalForm = ({ isModalOpen, toggleModal, validation }: IProps) => {
                   allowNegative={false}
                   onChange={validation.handleChange}
                 />
+                {validation.errors.productPrice &&
+                validation.touched.productPrice ? (
+                  <FormErrorMessage>
+                    {validation.errors.productPrice}
+                  </FormErrorMessage>
+                ) : null}
               </FormControl>
             </SimpleGrid>
 
