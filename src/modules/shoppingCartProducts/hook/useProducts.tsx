@@ -126,7 +126,12 @@ const UseProducts = ({
       .then(({ data }: { data: Blob }) => {
         openPdfInNewTab(generatePdfUrl(generateBlob(data)));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        notifyError(
+          "Que pena! Houve um erro ao gerar o PDF. Por favor, tente novamente mais tarde ou contate o suporte",
+        );
+        console.log(err.message);
+      });
   };
 
   const generateBlob = (data: Blob) => {
