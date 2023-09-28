@@ -36,7 +36,7 @@ const ProductsList = () => {
       name: Yup.string().required("O campo é obrigatório"),
       urgencyLevel: Yup.string().oneOf(Object.values(UrgencyLevel)),
       productPrice: Yup.string().required("O campo é obrigatório "),
-      productQuantity: Yup.string()
+      productQuantity: Yup.number()
         .min(1, "A quantidade deve ser maior ou igual a 1")
         .required("O campo é obrigatório"),
     }),
