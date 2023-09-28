@@ -57,8 +57,6 @@ const ProductsList = () => {
     },
   });
 
-  console.log(validation.errors);
-
   const toggleProductModal = () => {
     setIsProductModalOpen((prevState) => !prevState);
   };
