@@ -1,32 +1,22 @@
+import { CloseIcon, SearchIcon } from "@chakra-ui/icons";
 import {
-  Box,
   Button,
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
   Container,
-  Flex,
   Heading,
   Input,
   InputGroup,
   InputLeftAddon,
   InputRightAddon,
   SimpleGrid,
-  Text,
-  VStack,
 } from "@chakra-ui/react";
-import { formatDate } from "../../utils/dateUtils";
-import { ShoppingCartModel } from "../../models/ShoppingCartModel";
-import FloatButton from "../../../../components/floatButton";
-import ShoppingCartFormModal from "../../components/shoppingCartFormModal";
 import { FormikValues } from "formik";
-import { CloseIcon, DeleteIcon, EditIcon, SearchIcon } from "@chakra-ui/icons";
-import PopoverOptions from "../../components/popoverOptions";
 import React, { useContext } from "react";
-import { ModalDeleteContext } from "../../../../contexts/modalDelete/context/ModalDeleteContext";
+import FloatButton from "../../../../components/floatButton";
 import ModalDelete from "../../../../components/modalDelete";
-import { useNavigate } from "react-router-dom";
+import { ModalDeleteContext } from "../../../../contexts/modalDelete/context/ModalDeleteContext";
+import ShoppingCard from "../../components/shoppingCard";
+import ShoppingCartFormModal from "../../components/shoppingCartFormModal";
+import { ShoppingCartModel } from "../../models/ShoppingCartModel";
 
 interface IProps {
   shoppingCarts: ShoppingCartModel[];
@@ -53,8 +43,6 @@ const ShoppingCartListView = ({
   filterShoppingCarts,
   getShoppingCarts,
 }: IProps) => {
-  const navigate = useNavigate();
-
   const { toggleDeleteModal } = useContext(ModalDeleteContext);
 
   return (
@@ -112,63 +100,15 @@ const ShoppingCartListView = ({
             ({ id, name, description, productsAmount, createdAt }) => (
               <React.Fragment key={id}>
                 <ModalDelete id={id!} handleDelete={deleteShoppingCart} />
-                <Card key={id} size={"md"} variant={"filled"}>
-                  <CardHeader>
-                    <Flex gap={"4"}>
-                      <Flex
-                        flex="1"
-                        gap="4"
-                        alignItems="center"
-                        flexWrap="wrap"
-                      >
-                        <Box>
-                          <Heading size="sm">{name}</Heading>
-                        </Box>
-                      </Flex>
-                      <PopoverOptions
-                        options={[
-                          {
-                            title: "Editar",
-                            icon: <EditIcon color={"green.300"} />,
-                            shoppingCartId: id!,
-                            handleClick: getShoppingCartById,
-                          },
-                          {
-                            title: "Deletar",
-                            icon: <DeleteIcon color={"red.300"} />,
-                            shoppingCartId: id!,
-                            handleClick: toggleDeleteModal,
-                          },
-                        ]}
-                      />
-                    </Flex>
-                  </CardHeader>
-                  <CardBody>
-                    <Text>{description}</Text>
-                    <Text>Produtos: {productsAmount}</Text>
-                  </CardBody>
-                  <CardFooter>
-                    <VStack w={"full"}>
-                      <Button
-                        onClick={() => navigate(`/${id}`)}
-                        type={"button"}
-                        w={"full"}
-                        colorScheme="blue"
-                      >
-                        Ver mais
-                      </Button>
-                      <Text
-                        w={"full"}
-                        textAlign={"end"}
-                        fontSize="x-small"
-                        fontStyle={"italic"}
-                        color={"whiteAlpha.500"}
-                      >
-                        Criado em {formatDate(createdAt!)}
-                      </Text>
-                    </VStack>
-                  </CardFooter>
-                </Card>
+                <ShoppingCard
+                  createdAt={createdAt!}
+                  id={id!}
+                  name={name}
+                  description={description!}
+                  productsAmount={productsAmount!}
+                  getShoppingCartById={getShoppingCartById}
+                  toggleDeleteModal={toggleDeleteModal}
+                />
               </React.Fragment>
             ),
           )}
