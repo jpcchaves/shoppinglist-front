@@ -14,6 +14,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { formatDate } from "../../utils/dateUtils";
 import PopoverOptions from "../popoverOptions";
+import { formatCurrency } from "../../../shoppingCartProducts/utils/formatCurrency";
 
 interface IProps {
   id: string;
@@ -21,6 +22,7 @@ interface IProps {
   description: string;
   productsAmount: string;
   createdAt: string;
+  totalPrice: string;
   getShoppingCartById: (id: string) => void;
   toggleDeleteModal: () => void;
 }
@@ -31,6 +33,7 @@ const ShoppingCard = ({
   createdAt,
   description,
   productsAmount,
+  totalPrice,
   getShoppingCartById,
   toggleDeleteModal,
 }: IProps) => {
@@ -66,7 +69,8 @@ const ShoppingCard = ({
       <CardBody>
         <Text>{description}</Text>
         <Text>Produtos: {productsAmount}</Text>
-        <Text>Valor total: {productsAmount}</Text>
+        <Text>Total de produtos: {productsAmount}</Text>
+        <Text>Valor total: {formatCurrency(totalPrice)}</Text>
       </CardBody>
       <CardFooter>
         <VStack w={"full"}>

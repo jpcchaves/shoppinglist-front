@@ -97,7 +97,14 @@ const ShoppingCartListView = ({
       {shoppingCarts?.length ? (
         <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} gap={4}>
           {(shoppingCarts || []).map(
-            ({ id, name, description, productsAmount, createdAt }) => (
+            ({
+              id,
+              name,
+              description,
+              productsAmount,
+              createdAt,
+              totalPrice,
+            }) => (
               <React.Fragment key={id}>
                 <ModalDelete id={id!} handleDelete={deleteShoppingCart} />
                 <ShoppingCard
@@ -105,6 +112,7 @@ const ShoppingCartListView = ({
                   id={id!}
                   name={name}
                   description={description!}
+                  totalPrice={totalPrice!}
                   productsAmount={productsAmount!}
                   getShoppingCartById={getShoppingCartById}
                   toggleDeleteModal={toggleDeleteModal}
