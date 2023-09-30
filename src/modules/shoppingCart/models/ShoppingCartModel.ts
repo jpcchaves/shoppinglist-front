@@ -3,6 +3,7 @@ export type ShoppingCartModel = {
   uuid?: string;
   name: string;
   description?: string;
+  totalPrice?: string;
   productsAmount?: string;
   createdAt?: string;
 };
