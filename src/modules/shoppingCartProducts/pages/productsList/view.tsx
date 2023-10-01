@@ -1,7 +1,6 @@
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import {
   Box,
-  Button,
   Heading,
   IconButton,
   SimpleGrid,
@@ -11,12 +10,10 @@ import {
   Td,
   Th,
   Thead,
-  Tooltip,
   Tr,
 } from "@chakra-ui/react";
 import { FormikValues } from "formik";
 import React, { useState } from "react";
-import { BiFileBlank } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import FloatButton from "../../../../components/floatButton";
 import GoBackButton from "../../../../components/goBackButton";
@@ -25,6 +22,7 @@ import { useAppSelector } from "../../../../hooks/useRedux";
 import ProductModalForm from "../../components/productModalForm";
 import { formatCurrency } from "../../utils/formatCurrency";
 import "./styles/style.css";
+import ExportToPdfButton from "../../components/exportToPdfButton";
 
 interface IProps {
   isProductModalOpen: boolean;
@@ -149,23 +147,10 @@ const ProductsListView = ({
         aria-label={"float button"}
       />
 
-      <Tooltip
-        label={"Não é possível gerar o PDF a partir de uma lista vazia"}
-        isDisabled={!(productList?.products?.length <= 0)}
-      >
-        <Button
-          aria-label={"icon button exportToPdf"}
-          position={"fixed"}
-          right={"24"}
-          top={"12"}
-          size={"sm"}
-          onClick={() => exportToPdf()}
-          leftIcon={<BiFileBlank size={16} />}
-          isDisabled={productList?.products?.length <= 0}
-        >
-          Gerar PDF
-        </Button>
-      </Tooltip>
+      <ExportToPdfButton
+        exportToPdf={exportToPdf}
+        productsAmount={productList?.products?.length}
+      />
 
       <GoBackButton
         handleClick={() => navigate("/")}
